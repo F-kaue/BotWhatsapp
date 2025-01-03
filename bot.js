@@ -12,7 +12,7 @@ const weeklyReleases = [
 ];
 
 // ID do grupo para envio das mensagens
-const groupId = '120363385860109166@g.us'; // Substitua pelo ID do seu grupo
+const groupId = '120363385272147800@g.us'; // Substitua pelo ID do seu grupo
 
 // Função para enviar os lançamentos no grupo
 const sendWeeklyReleases = async (sock, groupId) => {
