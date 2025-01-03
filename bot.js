@@ -1,8 +1,46 @@
-const { default: makeWASocket, makeInMemoryStore, fetchLatestBaileysVersion, useMultiFileAuthState, DisconnectReason } = require('@whiskeysockets/baileys');
+const schedule = require('node-schedule');
+const { default: makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion, DisconnectReason } = require('@whiskeysockets/baileys');
 const qrcode = require('qrcode-terminal');
-const puppeteer = require('puppeteer');
-const { createCanvas, loadImage } = require('canvas');
 
+// Lista de lançamentos (edite conforme necessário)
+const weeklyReleases = [
+    { group: 'Equipe 777', code: 'PARABÉNS777🎰✅', link: 'https://777-parabens777.cc/?id=451572321&currency=BRL&type=2' },
+    { group: 'Grupo MK', code: '2025MK🎰✅', link: 'https://2025-mk.com/?id=103304974&currency=BRL&type=2' },
+    //{ group: 'Grupo Anjo', code: 'BFFPG🎰✅', link: 'https://bffpg.net/?id=338627118&currency=BRL&type=2' },
+    { group: 'Grupo KF', code: 'ABAB🎰✅', link: 'https://ababkf.bet/?id=516490713&currency=BRL&type=2' },
+    //{ group: 'Grupo VOY', code: 'NEWYEARPG🎰✅', link: 'https://voy-newyearpg.com/?id=767103918&currency=BRL&type=2' },
+];
+
+// ID do grupo para envio das mensagens
+const groupId = '120363385860109166@g.us'; // Substitua pelo ID do seu grupo
+
+// Função para enviar os lançamentos no grupo
+const sendWeeklyReleases = async (sock, groupId) => {
+    try {
+        let message = '🌟 *LANÇAMENTOS DA SEMANA* 🌟\n\n';
+        weeklyReleases.forEach((release) => {
+            message += `*${release.group}*\n${release.code}\n${release.link}\n\n`;
+        });
+
+        await sock.sendMessage(groupId, { text: message });
+        console.log(`[BOT] Mensagem enviada para o grupo ${groupId} com sucesso!`);
+    } catch (error) {
+        console.error('[BOT] Erro ao enviar os lançamentos:', error);
+    }
+};
+
+
+
+// Agendamento para enviar a mensagem automaticamente a cada 1 minuto
+const scheduleWeeklyReleases = (sock, groupId) => {
+    console.log('[BOT] Agendando mensagens automáticas para o grupo...');
+    schedule.scheduleJob('*/30 * * * *', () => {
+        console.log('[BOT] Enviando mensagens automáticas...');
+        sendWeeklyReleases(sock, groupId);
+    });
+};
+
+// Função principal para conectar ao WhatsApp
 const connectToWhatsApp = async () => {
     const { state, saveCreds } = await useMultiFileAuthState('./auth_info');
     const { version, isLatest } = await fetchLatestBaileysVersion();
@@ -13,15 +51,47 @@ const connectToWhatsApp = async () => {
         auth: state,
     });
 
-    sock.ev.on('creds.update', saveCreds);
+    sock.ev.on('messages.upsert', async (messageEvent) => {
+        const messages = messageEvent.messages;
+    
+        for (const msg of messages) {
+            const remoteJid = msg.key?.remoteJid;
+    
+            // Verifica se o ID do grupo existe e a mensagem é válida
+            if (remoteJid?.endsWith('@g.us') && msg.message?.conversation === '!id') {
+                try {
+                    // Envia a mensagem para o grupo com o ID
+                    await sock.sendMessage(remoteJid, { text: `O ID deste grupo é: ${remoteJid}` });
+                } catch (error) {
+                    console.error('Erro ao enviar a mensagem:', error);
+                }
+            }
+        }
+    });
+    
+
+
+
+try {
+    await sendMessageFunction(); // Substitua pela sua função de envio
+} catch (error) {
+    console.error("Erro ao enviar mensagem:", error);
+}
+
+    sock.ev.on('messages.upsert', async (messageEvent) => {
+        const messages = messageEvent.messages;
+    
+        for (const msg of messages) {
+            if (msg.key.remoteJid.endsWith('@g.us')) {
+                console.log(`Mensagem recebida de um grupo:`);
+                console.log(`ID do Grupo: ${msg.key.remoteJid}`);
+                console.log(`Nome do Grupo: ${msg.pushName || 'Desconhecido'}`);
+            }
+        }
+    });
 
     sock.ev.on('connection.update', (update) => {
-        const { connection, qr, lastDisconnect } = update;
-        if (qr) {
-            console.log('Escaneie o QR Code abaixo para se conectar:');
-            qrcode.generate(qr, { small: true });
-        }
-
+        const { connection, lastDisconnect } = update;
         if (connection === 'close') {
             const shouldReconnect = (lastDisconnect?.error?.output?.statusCode || 0) !== DisconnectReason.loggedOut;
             console.log('Conexão encerrada. Reconectando:', shouldReconnect);
@@ -30,6 +100,9 @@ const connectToWhatsApp = async () => {
             }
         } else if (connection === 'open') {
             console.log('Conectado ao WhatsApp!');
+
+            // Agendar envio de lançamentos para um grupo específico
+            scheduleWeeklyReleases(sock, groupId);
         }
     });
 
@@ -37,17 +110,10 @@ const connectToWhatsApp = async () => {
         const message = messages[0];
         if (!message.message || message.key.fromMe) return;
 
-        const sender = message.key.remoteJid; // ID do remetente
-        const senderName = message.pushName || sender.split('@')[0]; // Nome ou número do remetente
-        let text = '';
+        const sender = message.key.remoteJid;
+        const text = message.message.conversation || message.message.extendedTextMessage?.text || '';
 
-        if (message.message.conversation) {
-            text = message.message.conversation;
-        } else if (message.message.extendedTextMessage?.text) {
-            text = message.message.extendedTextMessage.text;
-        }
-
-        console.log(`Mensagem de ${senderName}: ${text}`);
+        console.log(`Mensagem de ${message.pushName || sender.split('@')[0]}: ${text}`);
 
         if (text.startsWith('/')) {
             const command = text.split(' ')[0];
@@ -55,39 +121,54 @@ const connectToWhatsApp = async () => {
                 case '/everyone':
                     await mentionEveryone(sock, sender);
                     break;
-
                 case '/slots':
                     await sendSlotsWithImages(sock, sender);
                     break;
-
                 case '/bingo':
                     await handleBingoCommand(sock, sender);
                     break;
-
                 case '/sorte':
-                    await handleLuckCommand(sock, sender, senderName);
+                    await handleLuckCommand(sock, sender, message.pushName || sender.split('@')[0]);
                     break;
-
                 default:
-                    await sock.sendMessage(sender, { text: 'Comando não reconhecido! Tente: /everyone, /slots, ou /sorte.' });
+                    await sock.sendMessage(sender, { text: 'Comando não reconhecido! Tente: /everyone, /slots, /bingo ou /sorte.' });
             }
         }
     });
+    sock.ev.on('connection.update', (update) => {
+        const { connection, qr } = update;
+        if (connection === 'open') {
+            console.log('Conectado ao WhatsApp!');
+        } else if (qr) {
+            qrcode.generate(qr, { small: true }); // Exibe o QR code no terminal
+        }
+    });
+
+    sock.ev.on('creds.update', saveCreds);
 };
 
-// Função para mencionar todos os membros de um grupo
+
+
+
+
+// Função para mencionar todos os membros de um grupo sem poluir a mensagem
 const mentionEveryone = async (sock, sender) => {
     try {
+        // Obtém os dados do grupo
         const groupMetadata = await sock.groupMetadata(sender);
         const mentions = groupMetadata.participants.map(p => p.id);
-        const numbers = mentions.map(id => `@${id.split('@')[0]}`).join(' ');
 
-        await sock.sendMessage(sender, { text: `Mencionando todos:\n${numbers}`, mentions });
+        // Envia uma mensagem limpa mencionando todos
+        await sock.sendMessage(sender, { 
+            text: 'Mencionando todos os membros do grupo!', 
+            mentions 
+        });
     } catch (error) {
         console.error('Erro ao mencionar todos:', error);
         await sock.sendMessage(sender, { text: 'Erro ao tentar mencionar todos os membros.' });
     }
 };
+
 
 // Função para gerar uma sorte aleatória acima de 79
 const generateRandomLuck = () => {

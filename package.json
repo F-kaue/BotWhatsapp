@@ -14,6 +14,9 @@
     "@adiwajshing/baileys": "^3.5.3",
     "@whiskeysockets/baileys": "^6.7.9",
     "canvas": "^3.0.1",
+    "link-preview-js": "^3.0.12",
+    "node-schedule": "^2.1.1",
+    "punycode": "^2.3.1",
     "puppeteer": "^23.11.1",
     "qrcode-terminal": "^0.12.0"
   }
