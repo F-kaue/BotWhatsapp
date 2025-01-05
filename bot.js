@@ -130,6 +130,13 @@ try {
         if (text.startsWith('/')) {
             const command = text.split(' ')[0];
             switch (command) {
+                case '/id':
+                await sock.sendMessage(sender, { text: `O ID deste grupo é: ${sender}` });
+                break;
+
+                case '/help':
+                await sendHelpMessage(sock, sender);
+                break;
                 case '/everyone':
                     await mentionEveryone(sock, sender);
                     break;
@@ -142,8 +149,13 @@ try {
                 case '/sorte':
                     await handleLuckCommand(sock, sender, message.pushName || sender.split('@')[0]);
                     break;
+                case '/quiz':
+                    
+                    break
+                
+                
                 default:
-                    await sock.sendMessage(sender, { text: 'Comando não reconhecido! Tente: /everyone, /slots, /bingo ou /sorte.' });
+                    await sock.sendMessage(sender, { text: 'Comando não reconhecido! Use /help para ver a lista de comandos.' });
             }
         }
     });
@@ -155,6 +167,29 @@ try {
             qrcode.generate(qr, { small: true }); // Exibe o QR code no terminal
         }
     });
+
+
+    sock.ev.on('messages.upsert', async (messageEvent) => {
+        const messages = messageEvent.messages;
+    
+        for (const msg of messages) {
+            if (msg.key.remoteJid?.endsWith('@g.us')) {
+                const groupId = msg.key.remoteJid;
+    
+                // Chama a função para verificar links
+                await handleLinkMessage(sock, groupId, msg);
+    
+                const text = msg.message?.conversation || msg.message?.extendedTextMessage?.text || '';
+    
+                // Comando para iniciar o quiz
+                if (text === '/quiz') {
+                    await handleQuizCommand(sock, groupId);
+                }
+            }
+        }
+    });
+
+
 
     sock.ev.on('creds.update', saveCreds);
 };
@@ -352,5 +387,104 @@ const handleBingoCommand = async (sock, sender) => {
     }
 };
 
+// Função para expulsar quem enviar links
+const handleLinkMessage = async (sock, groupId, message) => {
+    const sender = message.key.participant || message.key.remoteJid;
+    const text = message.message?.conversation || message.message?.extendedTextMessage?.text || '';
+
+    // Verifica se a mensagem contém um link e se o autor não é administrador
+    if (text.match(/https?:\/\/[^\s]+/) && !message.key.fromMe) {
+        try {
+            const groupMetadata = await sock.groupMetadata(groupId);
+            const isAdmin = groupMetadata.participants.some(
+                (participant) => participant.id === sender && participant.admin
+            );
+
+            if (!isAdmin) {
+                await sock.groupParticipantsUpdate(groupId, [sender], 'remove'); // Remove o participante
+                await sock.sendMessage(
+                    groupId,
+                    { text: `⚠️ O usuário @${sender.split('@')[0]} desobedeceu às regras do grupo e foi removido.`, mentions: [sender] }
+                );
+            }
+        } catch (error) {
+            console.error('Erro ao verificar/remover participante:', error);
+        }
+    }
+};
+
+// Função para criar e gerenciar um quiz
+const handleQuizCommand = async (sock, groupId) => {
+    // Lista de perguntas e respostas
+    const quizData = [
+        {
+            question: 'Qual é a capital da França?',
+            options: ['a) Berlim', 'b) Madri', 'c) Paris', 'd) Roma'],
+            answer: 'c',
+        },
+        {
+            question: 'Quanto é 2 + 2?',
+            options: ['a) 3', 'b) 4', 'c) 5', 'd) 6'],
+            answer: 'b',
+        },
+        {
+            question: 'Qual é o maior planeta do sistema solar?',
+            options: ['a) Marte', 'b) Vênus', 'c) Júpiter', 'd) Saturno'],
+            answer: 'c',
+        },
+    ];
+
+    // Seleciona uma pergunta aleatória e remove do pool
+    if (!global.quizPool || global.quizPool.length === 0) {
+        global.quizPool = [...quizData];
+    }
+    const randomIndex = Math.floor(Math.random() * global.quizPool.length);
+    const quiz = global.quizPool.splice(randomIndex, 1)[0];
+
+    const optionsText = quiz.options.map((opt, index) => `${opt}`).join('\n');
+
+    // Envia a pergunta no grupo
+    await sock.sendMessage(
+        groupId,
+        { text: `🧠 *Quiz Time!* \n\n${quiz.question}\n\n${optionsText}\n\nResponda com a letra da opção correta.` }
+    );
+
+    // Aguardar 30 segundos antes de enviar a resposta
+    setTimeout(async () => {
+        await sock.sendMessage(
+            groupId,
+            { text: `⏳ Tempo esgotado! A resposta correta era: *${quiz.answer}*.` }
+        );
+    }, 30000);
+};
+
+// Função para enviar a lista de comandos disponíveis
+const sendHelpMessage = async (sock, sender) => {
+    const helpMessage = `
+🌟 *Comandos Disponíveis* 🌟
+
+/help - Mostra esta lista de comandos.
+/everyone - Menciona todos os membros do grupo.
+/bingo - Inicia uma rodada de bingo.
+/sorte - Mostra sua sorte do dia em forma de porcentagem.
+/quiz - Cria uma pergunta divertida com opções para votação.
+
+
+⚠️ *Regras do Grupo* ⚠️
+- Envio de links por membros não-administradores resulta em expulsão automática do grupo.
+
+Use os comandos no formato indicado e aproveite as funcionalidades do bot! 😊
+    `;
+
+    try {
+        await sock.sendMessage(sender, { text: helpMessage });
+    } catch (error) {
+        console.error('Erro ao enviar a mensagem de ajuda:', error);
+        await sock.sendMessage(sender, { text: 'Erro ao enviar a mensagem de ajuda. Tente novamente mais tarde.' });
+    }
+};
+
+
 // Inicializar o bot
 connectToWhatsApp();
+
