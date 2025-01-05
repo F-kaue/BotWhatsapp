@@ -4,11 +4,13 @@ const qrcode = require('qrcode-terminal');
 
 // Lista de lançamentos (edite conforme necessário)
 const weeklyReleases = [
-    { group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
+    
+    {group:'4 PIX DE 30!\n\npara participar basta criar uma conta,\ndepositar 15,00\n\nhttps://gemaspg.com/?id=938963826&currency=BRL&type=2\n\nbater print e manda para a kaká no privado!\n\napós isso, escolhe 1 número disponível e envie seu id.\n\nSORTEIO AMANHÃ, PRECISA PREENCHER A LISTA! 💖\n\ngráfico da fp para te ajudar nos ganhos;\nhttps://www.grupofpsinais.com.br'}
+    ,//{ group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
     //{ group: 'Equipe 777', code: 'PARABÉNS777🎰✅', link: 'https://777-parabens777.cc/?id=451572321&currency=BRL&type=2' },
-    { group: 'Grupo MK', code: '2025MK🎰✅', link: 'https://2025-mk.com/?id=103304974&currency=BRL&type=2' },
+    //{ group: 'Grupo MK', code: '2025MK🎰✅', link: 'https://2025-mk.com/?id=103304974&currency=BRL&type=2' },
     //{ group: 'Grupo Anjo', code: 'BFFPG🎰✅', link: 'https://bffpg.net/?id=338627118&currency=BRL&type=2' },
-    { group: 'Grupo KF', code: 'ABAB🎰✅', link: 'https://ababkf.bet/?id=516490713&currency=BRL&type=2' },
+    //{ group: 'Grupo KF', code: 'ABAB🎰✅', link: 'https://ababkf.bet/?id=516490713&currency=BRL&type=2' },
     
     //{ group: 'Grupo VOY', code: 'NEWYEARPG🎰✅', link: 'https://voy-newyearpg.com/?id=767103918&currency=BRL&type=2' },
 ];
@@ -19,10 +21,17 @@ const groupId = '120363385272147800@g.us'; // Substitua pelo ID do seu grupo
 // Função para enviar os lançamentos no grupo
 const sendWeeklyReleases = async (sock, groupId) => {
     try {
-        let message = '🌟 *LANÇAMENTOS DA SEMANA* 🌟\n\n';
+        let message = '🌟 *SORTEIO DA SEMANA* 🌟\n\n';
+        
+        // Ativar quando quiser anunciar somente ao sorteio
         weeklyReleases.forEach((release) => {
-            message += `*${release.group}*\n${release.code}\n${release.link}\n\n`;
+            message += `${release.group}\n`;
         });
+
+        // Ativar quando quiser mandar os links
+        // weeklyReleases.forEach((release) => {
+        //     message += `*${release.group}*\n${release.code}\n${release.link}\n\n`;
+        // });
 
         await sock.sendMessage(groupId, { text: message });
         console.log(`[BOT] Mensagem enviada para o grupo ${groupId} com sucesso!`);
@@ -30,6 +39,7 @@ const sendWeeklyReleases = async (sock, groupId) => {
         console.error('[BOT] Erro ao enviar os lançamentos:', error);
     }
 };
+
 
 
 
