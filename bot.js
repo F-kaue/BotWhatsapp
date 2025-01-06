@@ -175,9 +175,14 @@ if (!state) {
     });
 
     sock.ev.on('connection.update', (update) => {
-        const connection = update.connection;
-        const lastDisconnect = update.lastDisconnect;
+        const { connection, lastDisconnect } = update;
+    console.log(`[BOT] Estado da conexão: ${connection}`);
+    if (lastDisconnect?.error) {
+        console.error('[BOT] Detalhes do erro:', lastDisconnect.error);
+    }
+        
         const qr = update.qr;
+        
         if (lastDisconnect?.error) {
             console.error('[BOT] Motivo da desconexão:', lastDisconnect.error);
         }
@@ -186,7 +191,6 @@ if (!state) {
             const shouldReconnect = lastDisconnect && (lastDisconnect.error?.output?.statusCode || 0) !== DisconnectReason.loggedOut;
             if (shouldReconnect) {
                 console.log('[BOT] Tentando reconectar...');
-                // Garantir que o estado de autenticação e a sessão sejam tratados corretamente
                 connectToWhatsApp();
             } else {
                 console.log('[BOT] Desconectado. Precisa escanear QR novamente.');
