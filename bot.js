@@ -8,8 +8,8 @@ const cheerio = require('cheerio');
 const puppeteer = require('puppeteer-core');
 
 // Configurações gerais
-const groupId = '120363385860109166@g.us'; // Substitua pelo ID do seu grupo
-
+const groupId = '120363385272147800@g.us'; // Grupo Kaká
+//const groupId = '120363385860109166@g.us'; //Grupo Teste
 // Lista de lançamentos
 const weeklyReleases = [
     
