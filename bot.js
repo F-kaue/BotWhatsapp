@@ -148,7 +148,7 @@ const handleMessage = async (sock, message) => {
 
 // Conexão principal do WhatsApp
 const connectToWhatsApp = async () => {
-    const { state, saveCreds } = await useMultiFileAuthState('./auth_info');
+    const { state, saveCreds } = await useMultiFileAuthState('./auth_info'); //alterar para ./auth_info_test quando for testar
 if (!state) {
     console.error('[BOT] Erro ao carregar estado de autenticação.');
 } else {
@@ -163,7 +163,7 @@ if (!state) {
 
     // Configuração do agendamento fora do evento de conexão
     //Alterar o tempo Mensagem Automática e ativar/desativar mensagem automatica
-    // schedule.scheduleJob('*/30 * * * *', () => sendWeeklyReleases(sock, groupId));
+    // schedule.scheduleJob('*/30 * * * *', () => sendWeeklyReleases(sock, groupId)); //Alterar o sock para sockTest para testar mensagem automatica 
 
     sock.ev.on('messages.upsert', async (msgEvent) => {
         for (const msg of msgEvent.messages) {
