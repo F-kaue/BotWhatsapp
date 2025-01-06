@@ -13,7 +13,7 @@ const groupId = '120363385272147800@g.us'; // Grupo Kaká
 // Lista de lançamentos
 const weeklyReleases = [
     
-    {group:'4 PIX DE 30!\n\npara participar basta criar uma conta,\ndepositar 15,00\n\nhttps://gemaspg.com/?id=938963826&currency=BRL&type=2\n\nbater print e manda para a kaká no privado!\n\napós isso, escolhe 1 número disponível e envie seu id.\n\nSORTEIO AMANHÃ, PRECISA PREENCHER A LISTA! 💖\n\ngráfico da fp para te ajudar nos ganhos;\nhttps://www.grupofpsinais.com.br'}
+    {group:'Mensagem teste'}
     ,//{ group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
     //{ group: 'Equipe 777', code: 'PARABÉNS777🎰✅', link: 'https://777-parabens777.cc/?id=451572321&currency=BRL&type=2' },
     //{ group: 'Grupo MK', code: '2025MK🎰✅', link: 'https://2025-mk.com/?id=103304974&currency=BRL&type=2' },
@@ -41,7 +41,7 @@ const generateBingoNumbers = () => {
 // Funções de envio de mensagens
 const sendWeeklyReleases = async (sock, groupId) => {
     try {
-        let message = '🌟 *SORTEIO DA SEMANA* 🌟\n\n';
+        let message = '🌟 *MENSAGEM TESTE* 🌟\n\n';
         
         // Ativar quando quiser anunciar somente ao sorteio
         weeklyReleases.forEach((release) => {
@@ -149,12 +149,21 @@ const handleMessage = async (sock, message) => {
 // Conexão principal do WhatsApp
 const connectToWhatsApp = async () => {
     const { state, saveCreds } = await useMultiFileAuthState('./auth_info');
+if (!state) {
+    console.error('[BOT] Erro ao carregar estado de autenticação.');
+} else {
+    console.log('[BOT] Estado de autenticação carregado com sucesso.');
+}
     const { version } = await fetchLatestBaileysVersion();
 
     const sock = makeWASocket({
         version,
         auth: state,
     });
+
+    // Configuração do agendamento fora do evento de conexão
+    //Alterar o tempo Mensagem Automática e ativar/desativar mensagem automatica
+    // schedule.scheduleJob('*/30 * * * *', () => sendWeeklyReleases(sock, groupId));
 
     sock.ev.on('messages.upsert', async (msgEvent) => {
         for (const msg of msgEvent.messages) {
@@ -166,19 +175,27 @@ const connectToWhatsApp = async () => {
     });
 
     sock.ev.on('connection.update', (update) => {
-        const { connection, lastDisconnect, qr } = update;
+        const connection = update.connection;
+        const lastDisconnect = update.lastDisconnect;
+        const qr = update.qr;
+        if (lastDisconnect?.error) {
+            console.error('[BOT] Motivo da desconexão:', lastDisconnect.error);
+        }
+    
         if (connection === 'close') {
-            const shouldReconnect = (lastDisconnect?.error?.output?.statusCode || 0) !== DisconnectReason.loggedOut;
-            console.log(`[BOT] Conexão encerrada. Reconectar: ${shouldReconnect}`);
-            if (shouldReconnect) connectToWhatsApp();
+            const shouldReconnect = lastDisconnect && (lastDisconnect.error?.output?.statusCode || 0) !== DisconnectReason.loggedOut;
+            if (shouldReconnect) {
+                console.log('[BOT] Tentando reconectar...');
+                // Garantir que o estado de autenticação e a sessão sejam tratados corretamente
+                connectToWhatsApp();
+            } else {
+                console.log('[BOT] Desconectado. Precisa escanear QR novamente.');
+            }
         } else if (connection === 'open') {
-            console.log(`[BOT] Conectado ao WhatsApp! Grupo ID: ${groupId}`);
-
-            //Alterar o tempo Mensagem Automática
-            schedule.scheduleJob('*/30 * * * *', () => sendWeeklyReleases(sock, groupId));
+            console.log('[BOT] Conectado ao WhatsApp!');
         } else if (qr) {
-            console.log('[BOT] QR Code gerado para conexão.');
-            qrcode.generate(qr, { small: true });
+           // Gerar o QR Code com escala e margem ajustadas para deixar menor
+        qrcode.generate(qr, { small: true, margin: 1, scale: 2 });
         }
     });
 
