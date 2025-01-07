@@ -6,8 +6,8 @@ const qrcode = require('qrcode-terminal');
 
 
 // Configurações gerais
-//const groupId = '120363385272147800@g.us'; // Grupo Kaká
-const groupId = '120363389372931037@g.us'; //Grupo Teste
+const groupId = '120363385272147800@g.us'; // Grupo Kaká
+//const groupId = '120363389372931037@g.us'; //Grupo Teste
 
 // Lista de lançamentos (edite conforme necessário)
 const weeklyReleases = [
@@ -51,10 +51,10 @@ const scheduleWeeklyReleases = (sock, groupId) => {
     console.log('[BOT] Agendando mensagens automáticas para o grupo...');
 
 //Alterar o tempo de envio da mensagem ativar/desativar mensagem automatica
-    schedule.scheduleJob('*/30 * * * *', () => {
-        console.log('[BOT] Enviando mensagens automáticas...');
-        sendWeeklyReleases(sock, groupId);
-    });
+    // schedule.scheduleJob('*/30 * * * *', () => {
+    //     console.log('[BOT] Enviando mensagens automáticas...');
+    //     sendWeeklyReleases(sock, groupId);
+    // });
 };
 
 // Função principal para conectar ao WhatsApp
