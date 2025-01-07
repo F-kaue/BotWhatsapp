@@ -1,16 +1,13 @@
-// Importações necessárias
 const schedule = require('node-schedule');
 const { default: makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion, DisconnectReason } = require('@whiskeysockets/baileys');
 const qrcode = require('qrcode-terminal');
-const axios = require('axios');
-const axiosRetry = require('axios-retry').default;
-const cheerio = require('cheerio');
-const puppeteer = require('puppeteer-core');
+
+
 
 
 // Configurações gerais
 //const groupId = '120363385272147800@g.us'; // Grupo Kaká
-const groupId = '120363385860109166@g.us'; //Grupo Teste
+const groupId = '120363389372931037@g.us'; //Grupo Teste
 
 // Lista de lançamentos (edite conforme necessário)
 const weeklyReleases = [
@@ -24,6 +21,8 @@ const weeklyReleases = [
     
     //{ group: 'Grupo VOY', code: 'NEWYEARPG🎰✅', link: 'https://voy-newyearpg.com/?id=767103918&currency=BRL&type=2' },
 ];
+
+
 
 // Função para enviar os lançamentos no grupo
 const sendWeeklyReleases = async (sock, groupId) => {
@@ -47,14 +46,15 @@ const sendWeeklyReleases = async (sock, groupId) => {
     }
 };
 
-// Função Mensagem Automatica 
+// Agendamento para enviar a mensagem automaticamente a cada 1 minuto
 const scheduleWeeklyReleases = (sock, groupId) => {
     console.log('[BOT] Agendando mensagens automáticas para o grupo...');
-    //Alterar o tempo de envio da mensagem ativar/desativar mensagem automatica
-    // schedule.scheduleJob('* * * * *', () => {
-    //     console.log('[BOT] Enviando mensagens automáticas...');
-    //     sendWeeklyReleases(sock, groupId);
-    // });
+
+//Alterar o tempo de envio da mensagem ativar/desativar mensagem automatica
+    schedule.scheduleJob('*/30 * * * *', () => {
+        console.log('[BOT] Enviando mensagens automáticas...');
+        sendWeeklyReleases(sock, groupId);
+    });
 };
 
 // Função principal para conectar ao WhatsApp
@@ -85,7 +85,7 @@ const connectToWhatsApp = async () => {
             }
         }
     });
-
+    
 try {
     await sendMessageFunction(); // Substitua pela sua função de envio
 } catch (error) {
@@ -120,7 +120,6 @@ try {
         }
     });
 
-    // Eventos do WhatsApp
     sock.ev.on('messages.upsert', async ({ messages }) => {
         const message = messages[0];
         if (!message.message || message.key.fromMe) return;
@@ -143,15 +142,14 @@ try {
                 case '/everyone':
                     await mentionEveryone(sock, sender);
                     break;
-                case '/slots':
-                    await sendSlotsWithImages(sock, sender);
-                    break;
                 case '/bingo':
                     await handleBingoCommand(sock, sender);
                     break;
                 case '/sorte':
                     await handleLuckCommand(sock, sender, message.pushName || sender.split('@')[0]);
                     break;
+                    
+        
                 
                 
                 default:
@@ -159,8 +157,6 @@ try {
             }
         }
     });
-    
-
     sock.ev.on('connection.update', (update) => {
         const { connection, qr } = update;
         if (connection === 'open') {
@@ -169,6 +165,30 @@ try {
             qrcode.generate(qr, { small: true }); // Exibe o QR code no terminal
         }
     });
+
+
+    sock.ev.on('messages.upsert', async (messageEvent) => {
+        const messages = messageEvent.messages;
+    
+        for (const msg of messages) {
+            if (msg.key.remoteJid?.endsWith('@g.us')) {
+                const groupId = msg.key.remoteJid;
+    
+                // Chama a função para verificar links
+                await handleLinkMessage(sock, groupId, msg);
+    
+                const text = msg.message?.conversation || msg.message?.extendedTextMessage?.text || '';
+    
+                // Comando para iniciar o quiz
+                if (text === '/quiz') {
+                    await handleQuizCommand(sock, groupId);
+                }
+            }
+        }
+    });
+
+
+
     sock.ev.on('creds.update', saveCreds);
 };
 
@@ -225,6 +245,16 @@ const handleLuckCommand = async (sock, sender, senderName) => {
     }
 };
 
+// Função para enviar imagem com slots e probabilidades
+const sendSlotsWithImages = async (sock, sender) => {
+    try {
+        const imageBuffer = await generateSlotsImage();
+        await sock.sendMessage(sender, { image: imageBuffer, caption: 'Slots com as Melhores Probabilidades' });
+    } catch (error) {
+        console.error('Erro ao enviar imagem de slots:', error);
+        await sock.sendMessage(sender, { text: 'Erro ao gerar imagem de slots.' });
+    }
+};
 
 // Função para gerar 6 números de bingo
 const generateBingoNumbers = () => {
@@ -286,7 +316,6 @@ const sendHelpMessage = async (sock, sender) => {
 /bingo - Inicia uma rodada de bingo.
 /sorte - Mostra sua sorte do dia em forma de porcentagem.
 
-
 ⚠️ *Regras do Grupo* ⚠️
 - Envio de links por membros não-administradores resulta em expulsão automática do grupo.
 
@@ -304,4 +333,3 @@ Use os comandos no formato indicado e aproveite as funcionalidades do bot! 😊
 
 // Inicializar o bot
 connectToWhatsApp();
-
