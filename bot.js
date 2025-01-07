@@ -11,8 +11,8 @@ const groupId = '120363385272147800@g.us'; // Grupo Kaká
 
 // Lista de lançamentos (edite conforme necessário)
 const weeklyReleases = [
-    {group:'Mensagem teste'},
-    //{group:'4 PIX DE 30!\n\npara participar basta criar uma conta,\ndepositar 15,00\n\nhttps://gemaspg.com/?id=938963826&currency=BRL&type=2\n\nbater print e manda para a kaká no privado!\n\napós isso, escolhe 1 número disponível e envie seu id.\n\nSORTEIO AMANHÃ, PRECISA PREENCHER A LISTA! 💖\n\ngráfico da fp para te ajudar nos ganhos;\nhttps://www.grupofpsinais.com.br'}
+    //{group:'Mensagem teste'},
+    {group:'SUPER SORTEIO\n🥇🥈🥉: Pix de 50\n+ 15 bancas de 20,00\nresultado 17/01\n——————————————\nDEPOSITE NO MINIMO 15,00R$\nEM QUALQUER PLATAFORMA INDICADA\nE GANHA 1 NUMERO\n\nDEPOSITE 50R$ EM QUALQUER\nPLATAFORMA INDICADA E GANHE\n10 NUMEROS\n———————————————\nENVIAR PRINT PARA @Meu numero: .\n\nPODE DEPOSITAR NA MESMA \nCONTA! ✅\n———————————————\nPLATAFORMAS INDICADAS\n\nGRUPO FP 🔥\nhttps://1motelpg.com/?id=725526060&currency=BRL&type=2\n\nGRUPO EQP777 🏠\nhttps://777-capa777.net/?id=695199135&currency=BRL&type=2\n\nGRUPO MANGA🥭\nhttps://manga-vesak-pg.com/?id=214966595&currency=BRL&type=2'}
     ,//{ group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
     //{ group: 'Equipe 777', code: 'PARABÉNS777🎰✅', link: 'https://777-parabens777.cc/?id=451572321&currency=BRL&type=2' },
     //{ group: 'Grupo MK', code: '2025MK🎰✅', link: 'https://2025-mk.com/?id=103304974&currency=BRL&type=2' },
@@ -51,10 +51,10 @@ const scheduleWeeklyReleases = (sock, groupId) => {
     console.log('[BOT] Agendando mensagens automáticas para o grupo...');
 
 //Alterar o tempo de envio da mensagem ativar/desativar mensagem automatica
-    // schedule.scheduleJob('*/30 * * * *', () => {
-    //     console.log('[BOT] Enviando mensagens automáticas...');
-    //     sendWeeklyReleases(sock, groupId);
-    // });
+    schedule.scheduleJob('*/30 * * * *', () => {
+        console.log('[BOT] Enviando mensagens automáticas...');
+        sendWeeklyReleases(sock, groupId);
+    });
 };
 
 // Função principal para conectar ao WhatsApp
