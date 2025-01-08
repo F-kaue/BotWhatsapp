@@ -2,9 +2,6 @@ const schedule = require('node-schedule');
 const { default: makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion, DisconnectReason } = require('@whiskeysockets/baileys');
 const qrcode = require('qrcode-terminal');
 
-
-
-
 // Configurações gerais
 const groupId = '120363385272147800@g.us'; // Grupo Kaká
 //const groupId = '120363389372931037@g.us'; //Grupo Teste
@@ -12,7 +9,35 @@ const groupId = '120363385272147800@g.us'; // Grupo Kaká
 // Lista de lançamentos (edite conforme necessário)
 const weeklyReleases = [
     //{group:'Mensagem teste'},
-    {group:'SUPER SORTEIO\n🥇🥈🥉: Pix de 50\n+ 15 bancas de 20,00\nresultado 17/01\n——————————————\nDEPOSITE NO MINIMO 15,00R$\nEM QUALQUER PLATAFORMA INDICADA\nE GANHA 1 NUMERO\n\nDEPOSITE 50R$ EM QUALQUER\nPLATAFORMA INDICADA E GANHE\n10 NUMEROS\n———————————————\nENVIAR PRINT PARA @Meu numero: .\n\nPODE DEPOSITAR NA MESMA \nCONTA! ✅\n———————————————\nPLATAFORMAS INDICADAS\n\nGRUPO FP 🔥\nhttps://1motelpg.com/?id=725526060&currency=BRL&type=2\n\nGRUPO EQP777 🏠\nhttps://777-capa777.net/?id=695199135&currency=BRL&type=2\n\nGRUPO MANGA🥭\nhttps://manga-vesak-pg.com/?id=214966595&currency=BRL&type=2'}
+    {group: `
+        SUPER SORTEIO
+        🥇🥈🥉: Pix de 50
+        + 15 bancas de 20,00
+        resultado 17/01
+        ——————————————
+        DEPOSITE NO MINIMO 15,00R$
+        EM QUALQUER PLATAFORMA INDICADA
+        E GANHA 1 NUMERO
+        
+        DEPOSITE 50R$ EM QUALQUER
+        PLATAFORMA INDICADA E GANHE
+        10 NÚMEROS
+        ———————————————
+        ENVIAR PRINT PARA @+558592441873 : .
+        
+        PODE DEPOSITAR NA MESMA 
+        CONTA! ✅
+        ———————————————
+        PLATAFORMAS INDICADAS
+        
+        GRUPO FP 🔥
+        https://1motelpg.com/?id=725526060&currency=BRL&type=2
+        
+        GRUPO EQP777 🏠
+        https://777-capa777.net/?id=695199135&currency=BRL&type=2
+        
+        GRUPO MANGA🥭
+        https://manga-vesak-pg.com/?id=214966595&currency=BRL&type=2`}
     ,//{ group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
     //{ group: 'Equipe 777', code: 'PARABÉNS777🎰✅', link: 'https://777-parabens777.cc/?id=451572321&currency=BRL&type=2' },
     //{ group: 'Grupo MK', code: '2025MK🎰✅', link: 'https://2025-mk.com/?id=103304974&currency=BRL&type=2' },
@@ -59,7 +84,7 @@ const scheduleWeeklyReleases = (sock, groupId) => {
 
 // Função principal para conectar ao WhatsApp
 const connectToWhatsApp = async () => {
-    const { state, saveCreds } = await useMultiFileAuthState('./auth_info');
+    const { state, saveCreds } = await useMultiFileAuthState('./ativ_whatsapp'); //Alterar para ./ativ_whatsapp_teste para testes
     const { version, isLatest } = await fetchLatestBaileysVersion();
     console.log(`Usando a versão do WA v${version.join('.')}, é a mais recente: ${isLatest}`);
 
@@ -84,10 +109,33 @@ const connectToWhatsApp = async () => {
                 }
             }
         }
+        for (const msg of messages) {
+            const sender = msg.key.remoteJid;
+    
+            // Ignorar mensagens do bot
+            if (msg.key.fromMe) continue;
+    
+            // Rastrear mensagens
+            if (msg.message?.conversation) {
+                trackActivity(sender, 'messages');
+            }
+    
+            // Rastrear áudios
+            if (msg.message?.audioMessage) {
+                trackActivity(sender, 'audios');
+            }
+    
+            // Rastrear fotos
+            if (msg.message?.imageMessage) {
+                trackActivity(sender, 'photos');
+            }
+        }
+    
+    
     });
     
 try {
-    await sendMessageFunction(); // Substitua pela sua função de envio
+     // Substitua pela sua função de envio
 } catch (error) {
     console.error("Erro ao enviar mensagem:", error);
 }
@@ -126,11 +174,21 @@ try {
 
         const sender = message.key.remoteJid;
         const text = message.message.conversation || message.message.extendedTextMessage?.text || '';
-
         console.log(`Mensagem de ${message.pushName || sender.split('@')[0]}: ${text}`);
+        const messageType = Object.keys(message.message)[0];
+        
+        // Determina o tipo de atividade no ranking
+        if (messageType === 'conversation') {
+            updateActivityData(sender, 'message');
+        } else if (messageType === 'audioMessage') {
+            updateActivityData(sender, 'audio');
+        } else if (messageType === 'imageMessage') {
+            updateActivityData(sender, 'photo');
+        }
 
         if (text.startsWith('/')) {
             const command = text.split(' ')[0];
+            const args = text.split(' ').slice(1);
             switch (command) {
                 case '/id':
                 await sock.sendMessage(sender, { text: `O ID deste grupo é: ${sender}` });
@@ -148,10 +206,62 @@ try {
                 case '/sorte':
                     await handleLuckCommand(sock, sender, message.pushName || sender.split('@')[0]);
                     break;
+                case '/tag':
+                    if (message.message.extendedTextMessage?.contextInfo?.quotedMessage) {
+                        const quotedMessage = message.message.extendedTextMessage.contextInfo.quotedMessage.conversation || '';
+                        await handleTagCommand(sock, sender, quotedMessage, sender);
+                    } else {
+                        await sock.sendMessage(sender, { text: 'Por favor, responda a uma mensagem ao usar o comando /tag.' });
+                    }
+                    break;
+                case '/forca':
+                    try {
+                        console.log("Comando /forca recebido");
+                        await resetGame();
+                        await sock.sendMessage(sender, {
+                            text: `
+            🤖 *Jogo da Forca Iniciado!* 🤖
+            Tema: ${currentHint}
+            
+            ✅ Comandos:
+            - /letra (letra): Para chutar uma letra.
+            - /adivinhar (palavra): Para tentar adivinhar a palavra completa.
+            - Você tem ${attemptsLeft} tentativas!
+            
+            Progresso da palavra: ${getWordProgress()}
+                                `,
+                            });
+                        } catch (error) {
+                            console.error('Erro ao iniciar jogo da forca:', error);
+                            await sock.sendMessage(sender, { text: 'Erro ao iniciar o jogo da forca. Tente novamente mais tarde.' });
+                        }
+                        break;
+            
+                case '/letra':
+                    if (!args[0] || args[0].length !== 1) {
+                        await sock.sendMessage(sender, { text: 'Envie uma letra válida! Exemplo: /letra a' });
+                    } else {
+                        const result = guessLetter(args[0]);
+                        await sock.sendMessage(sender, { text: result });
+                    }
+                    break;
+            
+                case '/adivinhar':
+                    if (!args[0]) {
+                        await sock.sendMessage(sender, { text: 'Envie uma palavra válida! Exemplo: /adivinhar casa' });
+                    } else {
+                        const result = guessWord(args.join(' '));
+                        await sock.sendMessage(sender, { text: result });
+                    }
+                    break;
+                case '/quiz':
+                    await handleQuizCommand(sock, sender);
+                    break;
+                case '/ranking':
+                    await handleRankingCommand(sock, sender);
+                    break;
+                
                     
-        
-                
-                
                 default:
                     await sock.sendMessage(sender, { text: 'Comando não reconhecido! Use /help para ver a lista de comandos.' });
             }
@@ -165,30 +275,6 @@ try {
             qrcode.generate(qr, { small: true }); // Exibe o QR code no terminal
         }
     });
-
-
-    sock.ev.on('messages.upsert', async (messageEvent) => {
-        const messages = messageEvent.messages;
-    
-        for (const msg of messages) {
-            if (msg.key.remoteJid?.endsWith('@g.us')) {
-                const groupId = msg.key.remoteJid;
-    
-                // Chama a função para verificar links
-                await handleLinkMessage(sock, groupId, msg);
-    
-                const text = msg.message?.conversation || msg.message?.extendedTextMessage?.text || '';
-    
-                // Comando para iniciar o quiz
-                if (text === '/quiz') {
-                    await handleQuizCommand(sock, groupId);
-                }
-            }
-        }
-    });
-
-
-
     sock.ev.on('creds.update', saveCreds);
 };
 
@@ -306,6 +392,324 @@ const handleLinkMessage = async (sock, groupId, message) => {
     }
 };
 
+// Função para reenviar mensagem respondida e mencionar todos
+const handleTagCommand = async (sock, sender, quotedMessage, groupId) => {
+    try {
+        if (!quotedMessage) {
+            await sock.sendMessage(sender, { text: 'Por favor, responda a uma mensagem ao usar o comando /tag.' });
+            return;
+        }
+
+        // Obtém os dados do grupo
+        const groupMetadata = await sock.groupMetadata(groupId);
+        const mentions = groupMetadata.participants.map(p => p.id); // Lista de IDs dos membros do grupo
+
+        // Reenvia a mensagem respondida mencionando todos os membros
+        await sock.sendMessage(sender, { 
+            text: quotedMessage, 
+            mentions 
+        });
+
+        console.log(`[BOT] Mensagem respondida e todos os membros mencionados no grupo ${groupId}`);
+    } catch (error) {
+        console.error('Erro ao processar o comando /tag:', error);
+        await sock.sendMessage(sender, { text: 'Erro ao processar o comando /tag. Tente novamente mais tarde.' });
+    }
+};
+
+
+//Função Forca
+// Dependências
+const fs = require('fs'); // Para manipular arquivos
+const palavras = require('./palavras'); // Importa o arquivo com palavras e dicas
+
+// Estados do jogo
+let currentWord = ''; // Palavra atual do jogo
+let currentHint = ''; // Dica ou tema da palavra
+let usedWords = []; // Palavras já usadas
+let guessedLetters = []; // Letras já adivinhadas
+let attemptsLeft = 6; // Número de tentativas restantes
+
+// Carrega as palavras já usadas do arquivo JSON
+const loadUsedWords = () => {
+    if (fs.existsSync('usedWords.json')) {
+        usedWords = JSON.parse(fs.readFileSync('usedWords.json', 'utf-8'));
+    }
+};
+
+// Salva as palavras já usadas no arquivo JSON
+const saveUsedWords = () => {
+    fs.writeFileSync('usedWords.json', JSON.stringify(usedWords));
+};
+
+// Busca uma nova palavra aleatória do arquivo de palavras
+const fetchNewWord = async () => {
+    console.log("Buscando nova palavra...");
+    const randomIndex = Math.floor(Math.random() * palavras.length);
+    const { word, hint } = palavras[randomIndex];
+
+    // Verifica se a palavra já foi usada
+    if (!usedWords.includes(word)) {
+        usedWords.push(word);
+        saveUsedWords(); // Atualiza a lista de palavras usadas
+        return { word, hint };
+    } else {
+        console.log("Palavra já usada, tentando outra...");
+        return await fetchNewWord(); // Busca outra palavra recursivamente
+    }
+};
+
+// Reseta o estado do jogo
+const resetGame = async () => {
+    console.log("Resetando o jogo...");
+    const newWord = await fetchNewWord();
+    if (newWord) {
+        currentWord = newWord.word;
+        currentHint = newWord.hint;
+        guessedLetters = [];
+        attemptsLeft = 6;
+        console.log("Novo jogo iniciado:", currentWord);
+    } else {
+        throw new Error('Não foi possível iniciar um novo jogo.');
+    }
+};
+
+// Exibe o progresso da palavra
+const getWordProgress = () => {
+    return currentWord
+        .split('')
+        .map((letter) => (guessedLetters.includes(letter) ? letter : '_'))
+        .join(' ');
+};
+
+// Processa a adivinhação de uma letra
+const guessLetter = (letter) => {
+    letter = letter.toUpperCase();
+
+    if (guessedLetters.includes(letter)) {
+        return `A letra "${letter}" já foi usada! Tente outra.`;
+    }
+
+    guessedLetters.push(letter);
+
+    if (currentWord.includes(letter)) {
+        if (!getWordProgress().includes('_')) {
+            const completedWord = currentWord;
+            resetGame(); // Reseta o jogo após vitória
+            return `🎉 Parabéns! Você completou a palavra: ${completedWord}`;
+        }
+        return `✅ Acertou! Progresso: ${getWordProgress()}`;
+    } else {
+        attemptsLeft -= 1;
+        if (attemptsLeft <= 0) {
+            const word = currentWord;
+            resetGame(); // Reseta o jogo após derrota
+            return `💀 Você perdeu! A palavra era: ${word}`;
+        }
+        return `❌ Errou! Tentativas restantes: ${attemptsLeft}\nProgresso: ${getWordProgress()}`;
+    }
+};
+// Processa a adivinhação da palavra completa
+const guessWord = (guess) => {
+    guess = guess.toUpperCase();
+
+    if (guess === currentWord) {
+        const word = currentWord;
+        resetGame(); // Reseta o jogo após vitória
+        return `🎉 Parabéns! Você acertou a palavra: ${word}`;
+    } else {
+        attemptsLeft -= 1;
+        if (attemptsLeft <= 0) {
+            const word = currentWord;
+            resetGame(); // Reseta o jogo após derrota
+            return `💀 Você perdeu! A palavra era: ${word}`;
+        }
+        return `❌ Errou! Tentativas restantes: ${attemptsLeft}`;
+    }
+};
+
+//Função Quiz
+
+let usedQuestions = []; // Lista de perguntas já usadas
+
+// Função para carregar perguntas do arquivo
+const loadQuestions = () => {
+    const data = fs.readFileSync('./questions.json', 'utf-8');
+    return JSON.parse(data);
+};
+
+// Função para escolher uma pergunta que ainda não foi feita
+const getRandomQuestion = () => {
+    const questions = loadQuestions();
+    const availableQuestions = questions.filter(q => !usedQuestions.includes(q.question));
+
+    if (availableQuestions.length === 0) {
+        usedQuestions = []; // Reseta a lista se todas as perguntas já foram usadas
+        return getRandomQuestion();
+    }
+
+    const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+    const selectedQuestion = availableQuestions[randomIndex];
+    usedQuestions.push(selectedQuestion.question);
+    return selectedQuestion;
+};
+
+// Função para lidar com o comando /quiz
+const handleQuizCommand = async (sock, sender) => {
+    const question = getRandomQuestion();
+
+    const message = `
+🤔 *Pergunta do Quiz* 🤔
+
+${question.question}
+A) ${question.options[0]}
+B) ${question.options[1]}
+C) ${question.options[2]}
+D) ${question.options[3]}
+
+Responda enviando o número correspondente (exemplo: 1).
+A resposta correta será revelada em 30 segundos!
+`;
+
+    await sock.sendMessage(sender, { text: message });
+
+    // Esperar 30 segundos antes de revelar a resposta
+    setTimeout(async () => {
+        const answerMessage = `✅ *Resposta correta*: ${question.answer}`;
+        await sock.sendMessage(sender, { text: answerMessage });
+    }, 30000); // 30 segundos
+};
+
+
+//Função Ranking
+
+const updateActivityData = (sender, type) => {
+    try {
+        const data = loadActivityData(); // Carrega os dados do arquivo
+        if (!data[sender]) {
+            data[sender] = { messages: 0, audios: 0, photos: 0 };
+        }
+
+        // Incrementa o tipo de atividade
+        if (type === 'message') {
+            data[sender].messages++;
+        } else if (type === 'audio') {
+            data[sender].audios++;
+        } else if (type === 'photo') {
+            data[sender].photos++;
+        }
+
+        saveActivityData(data); // Salva os dados atualizados no arquivo
+    } catch (error) {
+        console.error('Erro ao atualizar o ranking:', error);
+    }
+};
+
+const path = require('path');
+
+// Caminho do arquivo JSON para armazenar os dados
+const RANKING_FILE = path.join(__dirname, 'ranking.json');
+
+// Carregar os dados do arquivo JSON
+const loadActivityData = () => {
+    try {
+        if (fs.existsSync(RANKING_FILE)) {
+            const data = fs.readFileSync(RANKING_FILE, 'utf-8');
+            return JSON.parse(data);
+        }
+    } catch (error) {
+        console.error('Erro ao carregar o ranking:', error);
+    }
+    return {};
+};
+
+// Salvar os dados no arquivo JSON
+const saveActivityData = () => {
+    try {
+        fs.writeFileSync(RANKING_FILE, JSON.stringify(activityTracker, null, 2));
+    } catch (error) {
+        console.error('Erro ao salvar o ranking:', error);
+    }
+};
+
+// Inicializar o rastreador de atividades a partir do arquivo JSON
+const activityTracker = loadActivityData();
+
+// Função para registrar atividades
+const trackActivity = (sender, type) => {
+    if (!activityTracker[sender]) {
+        activityTracker[sender] = {
+            messages: 0,
+            audios: 0,
+            photos: 0,
+        };
+    }
+
+    activityTracker[sender][type]++;
+};
+
+// Função para gerar o ranking
+const generateRanking = () => {
+    const ranking = [];
+
+    for (const [key, value] of Object.entries(activityTracker)) {
+        const total = value.messages + value.audios + value.photos;
+        ranking.push({
+            user: key,
+            messages: value.messages,
+            audios: value.audios,
+            photos: value.photos,
+            total,
+        });
+    }
+
+    ranking.sort((a, b) => b.total - a.total); // Ordena por total de atividades
+
+    return ranking.slice(0, 5); // Retorna os top 5
+};
+
+// Função para responder ao comando /ranking
+const handleRankingCommand = async (sock, groupId) => {
+    try {
+        // Carrega os dados de atividade
+        const data = loadActivityData();
+
+        // Gera o ranking
+        const ranking = Object.entries(data)
+            .map(([user, activity]) => ({
+                user, // ID do usuário
+                messages: activity.messages || 0,
+                audios: activity.audios || 0,
+                photos: activity.photos || 0,
+                total: (activity.messages || 0) + (activity.audios || 0) + (activity.photos || 0),
+            }))
+            .sort((a, b) => b.total - a.total); // Ordena pelo total de atividades
+
+        // Verifica se há dados suficientes
+        if (ranking.length === 0) {
+            await sock.sendMessage(groupId, { text: 'Ainda não há dados suficientes para o ranking!' });
+            return;
+        }
+
+        // Constrói a mensagem do ranking
+        let message = '*🏆 Ranking dos Mais Ativos 🏆*\n\n';
+        ranking.forEach((user, index) => {
+            message += `${index + 1}. @${user.user.split('@')[0]}:\n`;
+            message += `   📩 Mensagens: ${user.messages}\n`;
+            message += `   🎤 Áudios: ${user.audios}\n`;
+            message += `   📷 Fotos: ${user.photos}\n`;
+            message += `   🔢 Total: ${user.total}\n\n`;
+        });
+
+        // Envia o ranking com menções
+        await sock.sendMessage(groupId, { text: message, mentions: ranking.map(user => user.user) });
+    } catch (error) {
+        console.error('Erro ao processar o ranking:', error);
+        await sock.sendMessage(groupId, { text: 'Erro ao obter o ranking. Tente novamente mais tarde.' });
+    }
+};
+
+
 // Função para enviar a lista de comandos disponíveis
 const sendHelpMessage = async (sock, sender) => {
     const helpMessage = `
@@ -315,6 +719,10 @@ const sendHelpMessage = async (sock, sender) => {
 /everyone - Menciona todos os membros do grupo.
 /bingo - Inicia uma rodada de bingo.
 /sorte - Mostra sua sorte do dia em forma de porcentagem.
+/tag - Marcar a mensagem e enviar para todos.
+/forca - Iniciar brincadeira da forca.
+/quiz - Iniciar um quiz.
+/ranking - Ver os rank dos participantes mais ativos no grupo
 
 ⚠️ *Regras do Grupo* ⚠️
 - Envio de links por membros não-administradores resulta em expulsão automática do grupo.

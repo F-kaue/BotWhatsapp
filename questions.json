@@ -1,0 +1,584 @@
+[
+    {
+        "question": "Qual é a capital da França?",
+        "options": ["Paris", "Londres", "Berlim", "Madri"],
+        "answer": "Paris"
+    },
+    {
+        "question": "Quem escreveu 'Dom Quixote'?",
+        "options": ["Miguel de Cervantes", "William Shakespeare", "Dante Alighieri", "Victor Hugo"],
+        "answer": "Miguel de Cervantes"
+    },
+    {
+        "question": "Qual é o maior planeta do Sistema Solar?",
+        "options": ["Terra", "Marte", "Júpiter", "Saturno"],
+        "answer": "Júpiter"
+    },
+    {
+        "question": "Em que ano aconteceu a Revolução Francesa?",
+        "options": ["1789", "1776", "1804", "1821"],
+        "answer": "1789"
+    },
+    {
+        "question": "Quem pintou a Mona Lisa?",
+        "options": ["Leonardo da Vinci", "Pablo Picasso", "Vincent van Gogh", "Claude Monet"],
+        "answer": "Leonardo da Vinci"
+    },
+    {
+        "question": "Qual é a fórmula química da água?",
+        "options": ["H2O", "CO2", "O2", "NaCl"],
+        "answer": "H2O"
+    },
+    {
+        "question": "Qual é o nome científico do ser humano?",
+        "options": ["Homo sapiens", "Homo erectus", "Homo habilis", "Homo neanderthalensis"],
+        "answer": "Homo sapiens"
+    },
+    {
+        "question": "Qual é o metal mais precioso?",
+        "options": ["Ouro", "Prata", "Platina", "Bronze"],
+        "answer": "Ouro"
+    },
+    {
+        "question": "Qual planeta é conhecido como o Planeta Vermelho?",
+        "options": ["Marte", "Júpiter", "Saturno", "Vênus"],
+        "answer": "Marte"
+    },
+    {
+        "question": "Quem foi o primeiro presidente dos Estados Unidos?",
+        "options": ["George Washington", "Abraham Lincoln", "Thomas Jefferson", "John Adams"],
+        "answer": "George Washington"
+    },
+    {
+        "question": "Qual é a maior ilha do mundo?",
+        "options": ["Groenlândia", "Madagascar", "Nova Guiné", "Borneo"],
+        "answer": "Groenlândia"
+    },
+    {
+        "question": "Em que ano o homem pisou na Lua pela primeira vez?",
+        "options": ["1969", "1972", "1958", "1965"],
+        "answer": "1969"
+    },
+    {
+        "question": "Qual é o idioma mais falado no mundo?",
+        "options": ["Chinês", "Inglês", "Espanhol", "Hindi"],
+        "answer": "Chinês"
+    },
+    {
+        "question": "Qual é a moeda oficial do Japão?",
+        "options": ["Iene", "Yuan", "Won", "Dólar"],
+        "answer": "Iene"
+    },
+    {
+        "question": "Quem é o autor de 'O Pequeno Príncipe'?",
+        "options": ["Antoine de Saint-Exupéry", "J.K. Rowling", "J.R.R. Tolkien", "George Orwell"],
+        "answer": "Antoine de Saint-Exupéry"
+    },
+    {
+        "question": "Quantos continentes existem na Terra?",
+        "options": ["7", "5", "6", "8"],
+        "answer": "7"
+    },
+    {
+        "question": "Qual é o país mais populoso do mundo?",
+        "options": ["China", "Índia", "Estados Unidos", "Indonésia"],
+        "answer": "China"
+    },
+    {
+        "question": "Qual é o símbolo químico do ferro?",
+        "options": ["Fe", "Ir", "F", "I"],
+        "answer": "Fe"
+    },
+    {
+        "question": "Quem descobriu a gravidade?",
+        "options": ["Isaac Newton", "Albert Einstein", "Galileu Galilei", "Nicolau Copérnico"],
+        "answer": "Isaac Newton"
+    },
+    {
+        "question": "Qual é a maior floresta tropical do mundo?",
+        "options": ["Amazônia", "Congo", "Daintree", "Borneo"],
+        "answer": "Amazônia"
+    },
+    {
+        "question": "Qual é o maior oceano do mundo?",
+        "options": ["Pacífico", "Atlântico", "Índico", "Ártico"],
+        "answer": "Pacífico"
+    },
+    {
+        "question": "Qual é a capital da Austrália?",
+        "options": ["Canberra", "Sydney", "Melbourne", "Brisbane"],
+        "answer": "Canberra"
+    },
+    {
+        "question": "Quem foi o líder dos nazistas durante a Segunda Guerra Mundial?",
+        "options": ["Adolf Hitler", "Joseph Stalin", "Winston Churchill", "Benito Mussolini"],
+        "answer": "Adolf Hitler"
+    },
+    {
+        "question": "Quantos estados existem nos Estados Unidos?",
+        "options": ["50", "48", "52", "45"],
+        "answer": "50"
+    },
+    {
+        "question": "Qual é a unidade de medida de força no Sistema Internacional?",
+        "options": ["Newton", "Joule", "Pascal", "Watt"],
+        "answer": "Newton"
+    },
+    {
+        "question": "Quem compôs a Nona Sinfonia?",
+        "options": ["Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Johann Sebastian Bach", "Frédéric Chopin"],
+        "answer": "Ludwig van Beethoven"
+    },
+    {
+        "question": "Qual é a capital da Itália?",
+        "options": ["Roma", "Milão", "Veneza", "Florença"],
+        "answer": "Roma"
+    },
+    {
+        "question": "Qual é a montanha mais alta do mundo?",
+        "options": ["Monte Everest", "K2", "Kangchenjunga", "Makalu"],
+        "answer": "Monte Everest"
+    },
+    {
+        "question": "Quem inventou o telefone?",
+        "options": ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Guglielmo Marconi"],
+        "answer": "Alexander Graham Bell"
+    },
+    {
+        "question": "Qual é o maior país do mundo em extensão territorial?",
+        "options": ["Rússia", "Canadá", "China", "Estados Unidos"],
+        "answer": "Rússia"
+    },
+    {
+        "question": "Quem escreveu 'Romeu e Julieta'?",
+        "options": ["William Shakespeare", "Jane Austen", "Leo Tolstoy", "Mark Twain"],
+        "answer": "William Shakespeare"
+    },
+    {
+        "question": "Qual é o menor país do mundo?",
+        "options": ["Vaticano", "Mônaco", "Nauru", "San Marino"],
+        "answer": "Vaticano"
+    },
+    {
+        "question": "Qual é a cor resultante da mistura do azul com o amarelo?",
+        "options": ["Verde", "Roxo", "Laranja", "Marrom"],
+        "answer": "Verde"
+    },
+    {
+        "question": "Quem pintou 'A Noite Estrelada'?",
+        "options": ["Vincent van Gogh", "Claude Monet", "Pablo Picasso", "Salvador Dalí"],
+        "answer": "Vincent van Gogh"
+    },
+    {
+        "question": "Qual é o rio mais longo do mundo?",
+        "options": ["Nilo", "Amazonas", "Yangtzé", "Mississipi"],
+        "answer": "Nilo"
+    },
+    {
+        "question": "Em que país se encontra a Torre Eiffel?",
+        "options": ["França", "Itália", "Espanha", "Alemanha"],
+        "answer": "França"
+    },
+    {
+        "question": "Quem é conhecido como o 'Pai da Aviação'?",
+        "options": ["Santos Dumont", "Wright Brothers", "Leonardo da Vinci", "Charles Lindbergh"],
+        "answer": "Santos Dumont"
+    },
+    {
+        "question": "Qual é o maior animal terrestre?",
+        "options": ["Elefante", "Girafa", "Rinoceronte", "Hipopótamo"],
+        "answer": "Elefante"
+    },
+    {
+        "question": "Quem descobriu a América?",
+        "options": ["Cristóvão Colombo", "Amerigo Vespucci", "Ferdinand Magellan", "Vasco da Gama"],
+        "answer": "Cristóvão Colombo"
+    },
+    {
+        "question": "Qual é o nome do processo pelo qual as plantas produzem seu alimento?",
+        "options": ["Fotossíntese", "Respiração", "Transpiração", "Fermentação"],
+        "answer": "Fotossíntese"
+    },
+    {
+        "question": "Qual é o maior órgão do corpo humano?",
+        "options": ["Pele", "Fígado", "Coração", "Cérebro"],
+        "answer": "Pele"
+    },
+    {
+        "question": "Quantos lados tem um hexágono?",
+        "options": ["6", "5", "7", "8"],
+        "answer": "6"
+    },
+    {
+        "question": "Quem é o autor de '1984'?",
+        "options": ["George Orwell", "Aldous Huxley", "Ray Bradbury", "Isaac Asimov"],
+        "answer": "George Orwell"
+    },
+        
+    {
+        "question": "Qual é a fórmula química do sal de cozinha?",
+        "options": ["NaCl", "KCl", "LiCl", "CaCl2"],
+        "answer": "NaCl"
+    },
+    {
+        "question": "Quem pintou a Capela Sistina?",
+        "options": ["Michelangelo", "Leonardo da Vinci", "Raphael", "Donatello"],
+        "answer": "Michelangelo"
+    },
+    {
+        "question": "Quantos ossos tem o corpo humano adulto?",
+        "options": ["206", "208", "210", "212"],
+        "answer": "206"
+    },
+    {
+        "question": "Qual é a capital do Canadá?",
+        "options": ["Ottawa", "Toronto", "Vancouver", "Montreal"],
+        "answer": "Ottawa"
+    },
+    {
+        "question": "Quem escreveu 'O Morro dos Ventos Uivantes'?",
+        "options": ["Emily Brontë", "Jane Austen", "Charlotte Brontë", "Mary Shelley"],
+        "answer": "Emily Brontë"
+    },
+    {
+        "question": "Qual é o gás mais abundante na atmosfera terrestre?",
+        "options": ["Nitrogênio", "Oxigênio", "Dióxido de carbono", "Argônio"],
+        "answer": "Nitrogênio"
+    },
+    {
+        "question": "Quem é o criador do Facebook?",
+        "options": ["Mark Zuckerberg", "Elon Musk", "Bill Gates", "Larry Page"],
+        "answer": "Mark Zuckerberg"
+    },
+    {
+        "question": "Qual é a montanha mais alta da África?",
+        "options": ["Kilimanjaro", "Monte Quênia", "Ras Dashen", "Monte Meru"],
+        "answer": "Kilimanjaro"
+    },
+    {
+        "question": "Em que ano começou a Primeira Guerra Mundial?",
+        "options": ["1914", "1918", "1939", "1945"],
+        "answer": "1914"
+    },
+    {
+        "question": "Qual é o animal mais rápido do mundo?",
+        "options": ["Guepardo", "Falcão-peregrino", "Leão", "Águia"],
+        "answer": "Guepardo"
+    },
+    {
+        "question": "Qual foi a primeira universidade do mundo?",
+        "options": ["Universidade de Bolonha", "Universidade de Oxford", "Universidade de Paris", "Universidade de Cambridge"],
+        "answer": "Universidade de Bolonha"
+    },
+    {
+        "question": "Qual é a moeda oficial do Reino Unido?",
+        "options": ["Libra esterlina", "Euro", "Dólar", "Franco"],
+        "answer": "Libra esterlina"
+    },
+    {
+        "question": "Qual é a capital do Egito?",
+        "options": ["Cairo", "Alexandria", "Luxor", "Giza"],
+        "answer": "Cairo"
+    },
+    {
+        "question": "Quem escreveu 'A Origem das Espécies'?",
+        "options": ["Charles Darwin", "Gregor Mendel", "Thomas Huxley", "Alfred Russel Wallace"],
+        "answer": "Charles Darwin"
+    },
+    {
+        "question": "Qual é a língua oficial do Brasil?",
+        "options": ["Português", "Espanhol", "Inglês", "Francês"],
+        "answer": "Português"
+    },
+    {
+        "question": "Qual é o país conhecido como 'Terra do Sol Nascente'?",
+        "options": ["Japão", "China", "Coreia do Sul", "Tailândia"],
+        "answer": "Japão"
+    },
+    {
+        "question": "Em que ano caiu o Muro de Berlim?",
+        "options": ["1989", "1987", "1990", "1985"],
+        "answer": "1989"
+    },
+    {
+        "question": "Qual é a fórmula química do dióxido de carbono?",
+        "options": ["CO2", "CO", "O2", "C2O"],
+        "answer": "CO2"
+    },
+    {
+        "question": "Quem escreveu 'A Metamorfose'?",
+        "options": ["Franz Kafka", "Hermann Hesse", "Thomas Mann", "Albert Camus"],
+        "answer": "Franz Kafka"
+    },
+    {
+        "question": "Qual é o nome do músculo mais forte do corpo humano?",
+        "options": ["Masseter", "Bíceps", "Tríceps", "Quadríceps"],
+        "answer": "Masseter"
+    },
+    {
+        "question": "Qual é a capital do México?",
+        "options": ["Cidade do México", "Guadalajara", "Monterrey", "Cancún"],
+        "answer": "Cidade do México"
+    },
+    {
+        "question": "Quem descobriu a penicilina?",
+        "options": ["Alexander Fleming", "Louis Pasteur", "Joseph Lister", "Robert Koch"],
+        "answer": "Alexander Fleming"
+    },
+    {
+        "question": "Qual é a maior cidade do Brasil?",
+        "options": ["São Paulo", "Rio de Janeiro", "Salvador", "Brasília"],
+        "answer": "São Paulo"
+    },
+    {
+        "question": "Quem escreveu 'Dom Casmurro'?",
+        "options": ["Machado de Assis", "Jorge Amado", "Clarice Lispector", "José de Alencar"],
+        "answer": "Machado de Assis"
+    },
+    {
+        "question": "Qual é a cor do sangue dos crustáceos?",
+        "options": ["Azul", "Vermelho", "Verde", "Transparente"],
+        "answer": "Azul"
+    },
+    {
+        "question": "Quem foi o primeiro homem a orbitar a Terra?",
+        "options": ["Yuri Gagarin", "Neil Armstrong", "John Glenn", "Alan Shepard"],
+        "answer": "Yuri Gagarin"
+    },
+    {
+        "question": "Qual é o nome do satélite natural da Terra?",
+        "options": ["Lua", "Titã", "Europa", "Fobos"],
+        "answer": "Lua"
+    },
+    {
+        "question": "Qual é o maior deserto do mundo?",
+        "options": ["Saara", "Deserto da Arábia", "Deserto de Gobi", "Deserto do Atacama"],
+        "answer": "Saara"
+    },
+    {
+        "question": "Qual é a capital da Argentina?",
+        "options": ["Buenos Aires", "Rosário", "Córdoba", "Mendoza"],
+        "answer": "Buenos Aires"
+    },
+    {
+        "question": "Quem escreveu 'Grande Sertão: Veredas'?",
+        "options": ["Guimarães Rosa", "Graciliano Ramos", "Jorge Amado", "Érico Veríssimo"],
+        "answer": "Guimarães Rosa"
+    },
+    {
+        "question": "Qual é a unidade de medida de pressão no Sistema Internacional?",
+        "options": ["Pascal", "Bar", "Psi", "Atm"],
+        "answer": "Pascal"
+    },
+    {
+        "question": "Qual é a capital do Chile?",
+        "options": ["Santiago", "Valparaíso", "Concepción", "La Serena"],
+        "answer": "Santiago"
+    },
+    {
+        "question": "Quem foi o primeiro homem a pisar na Lua?",
+        "options": ["Neil Armstrong", "Buzz Aldrin", "Michael Collins", "Yuri Gagarin"],
+        "answer": "Neil Armstrong"
+    },
+    {
+        "question": "Qual é a capital da Alemanha?",
+        "options": ["Berlim", "Munique", "Frankfurt", "Hamburgo"],
+        "answer": "Berlim"
+    },
+    {
+        "question": "Quem foi o autor de 'O Príncipe'?",
+        "options": ["Nicolau Maquiavel", "Thomas Hobbes", "John Locke", "Montesquieu"],
+        "answer": "Nicolau Maquiavel"
+    },
+    {
+        "question": "Qual é o nome da mãe do Harry Potter?",
+        "options": ["Lily Potter", "Hermione Granger", "Molly Weasley", "Minerva McGonagall"],
+        "answer": "Lily Potter"
+    },
+    {
+        "question": "Qual é a unidade de medida de energia no Sistema Internacional?",
+        "options": ["Joule", "Watt", "Volt", "Ampere"],
+        "answer": "Joule"
+    },
+    {
+        "question": "Qual é o nome do lugar onde os filmes são feitos em Hollywood?",
+        "options": ["Estúdios", "Cinemas", "Teatros", "Galerias"],
+        "answer": "Estúdios"
+    },
+    {
+        "question": "Quem escreveu 'Cem Anos de Solidão'?",
+        "options": ["Gabriel García Márquez", "Mario Vargas Llosa", "Isabel Allende", "Pablo Neruda"],
+        "answer": "Gabriel García Márquez"
+    },
+    {
+        "question": "Qual é o super-herói conhecido como 'Homem de Ferro'?",
+        "options": ["Tony Stark", "Bruce Wayne", "Clark Kent", "Peter Parker"],
+        "answer": "Tony Stark"
+    },
+    {
+        "question": "Quem é o autor da série 'Harry Potter'?",
+        "options": ["J.K. Rowling", "J.R.R. Tolkien", "C.S. Lewis", "George R.R. Martin"],
+        "answer": "J.K. Rowling"
+    },
+    {
+        "question": "Qual é o nome do brinquedo espacial em 'Toy Story'?",
+        "options": ["Buzz Lightyear", "Woody", "Jessie", "Rex"],
+        "answer": "Buzz Lightyear"
+    },
+    {
+        "question": "Qual é a capital dos Estados Unidos?",
+        "options": ["Washington D.C.", "Nova Iorque", "Los Angeles", "Chicago"],
+        "answer": "Washington D.C."
+    },
+    {
+        "question": "Qual é a banda que lançou o álbum 'Abbey Road'?",
+        "options": ["The Beatles", "The Rolling Stones", "Led Zeppelin", "Pink Floyd"],
+        "answer": "The Beatles"
+    },
+    {
+        "question": "Em que ano foi lançado o primeiro filme de 'Star Wars'?",
+        "options": ["1977", "1980", "1983", "1999"],
+        "answer": "1977"
+    },
+    {
+        "question": "Qual é o nome do planeta natal de Superman?",
+        "options": ["Krypton", "Terra", "Marte", "Vênus"],
+        "answer": "Krypton"
+    },
+    {
+        "question": "Quem pintou 'A Última Ceia'?",
+        "options": ["Leonardo da Vinci", "Michelangelo", "Raphael", "Donatello"],
+        "answer": "Leonardo da Vinci"
+    },
+    {
+        "question": "Qual é o nome do mascote da Sega que é um ouriço azul?",
+        "options": ["Sonic", "Mario", "Luigi", "Link"],
+        "answer": "Sonic"
+    },
+    {
+        "question": "Qual é a série de TV onde um grupo de pessoas sobrevive a um acidente de avião em uma ilha deserta?",
+        "options": ["Lost", "Breaking Bad", "Friends", "The Walking Dead"],
+        "answer": "Lost"
+    },
+    {
+        "question": "Qual é o nome do parque de dinossauros em 'Jurassic Park'?",
+        "options": ["Isla Nublar", "Isla Sorna", "Isla Muerta", "Isla Bonita"],
+        "answer": "Isla Nublar"
+    },
+    {
+        "question": "Qual é o nome do vilão no filme 'O Rei Leão'?",
+        "options": ["Scar", "Mufasa", "Zazu", "Rafiki"],
+        "answer": "Scar"
+    },
+    {
+        "question": "Qual é a cidade principal onde se passa a série 'Friends'?",
+        "options": ["Nova Iorque", "Los Angeles", "Chicago", "San Francisco"],
+        "answer": "Nova Iorque"
+    },
+    {
+        "question": "Qual é o nome do autor de 'O Senhor dos Anéis'?",
+        "options": ["J.R.R. Tolkien", "George R.R. Martin", "C.S. Lewis", "Philip Pullman"],
+        "answer": "J.R.R. Tolkien"
+    },
+    {
+        "question": "Qual é a casa de Hogwarts onde Harry Potter foi selecionado?",
+        "options": ["Grifinória", "Sonserina", "Lufa-Lufa", "Corvinal"],
+        "answer": "Grifinória"
+    },
+    {
+        "question": "Qual é o nome do super-herói cego que protege Hell's Kitchen?",
+        "options": ["Demolidor", "Batman", "Wolverine", "Homem-Aranha"],
+        "answer": "Demolidor"
+    },
+    {
+        "question": "Qual é o nome do robô dourado em 'Star Wars'?",
+        "options": ["C-3PO", "R2-D2", "BB-8", "K-2SO"],
+        "answer": "C-3PO"
+    },
+    {
+        "question": "Qual é o nome do personagem azul em 'Avatar'?",
+        "options": ["Jake Sully", "Neytiri", "Tsu'Tey", "Grace Augustine"],
+        "answer": "Jake Sully"
+    },
+    {
+        "question": "Qual é o nome do vilão em 'Os Vingadores' que quer reunir as Joias do Infinito?",
+        "options": ["Thanos", "Loki", "Ultron", "Hela"],
+        "answer": "Thanos"
+    },
+    {
+        "question": "Qual é o nome do jogo onde o personagem principal é um encanador italiano?",
+        "options": ["Super Mario", "Sonic", "Pac-Man", "Zelda"],
+        "answer": "Super Mario"
+    },
+    {
+        "question": "Qual é o nome do barco no filme 'Titanic'?",
+        "options": ["RMS Titanic", "RMS Olympic", "RMS Lusitania", "RMS Britannic"],
+        "answer": "RMS Titanic"
+    },
+    {
+        "question": "Qual é a série onde um professor de química vira um traficante de metanfetamina?",
+        "options": ["Breaking Bad", "Narcos", "Ozark", "The Sopranos"],
+        "answer": "Breaking Bad"
+    },
+    {
+        "question": "Qual é o nome do protagonista de 'The Witcher'?",
+        "options": ["Geralt de Rívia", "Yennefer de Vengerberg", "Jaskier", "Ciri"],
+        "answer": "Geralt de Rívia"
+    },
+    {
+        "question": "Qual é o nome do filme de animação da Pixar onde brinquedos ganham vida?",
+        "options": ["Toy Story", "Os Incríveis", "Procurando Nemo", "Monstros S.A."],
+        "answer": "Toy Story"
+    },
+    {
+        "question": "Qual é a cidade onde se passa 'Stranger Things'?",
+        "options": ["Hawkins", "Springfield", "Gotham", "Metropolis"],
+        "answer": "Hawkins"
+    },
+    {
+        "question": "Qual é o nome do dragão em 'Como Treinar o Seu Dragão'?",
+        "options": ["Banguela", "Chicote da Morte", "Pesadelo Monstruoso", "Terrível Terror"],
+        "answer": "Banguela"
+    },
+    {
+        "question": "Qual é o nome do parque temático criado por Walt Disney?",
+        "options": ["Disneyland", "Universal Studios", "Magic Kingdom", "Epcot"],
+        "answer": "Disneyland"
+    },
+    {
+        "question": "Qual é o nome do personagem principal de 'Matrix'?",
+        "options": ["Neo", "Morpheus", "Trinity", "Smith"],
+        "answer": "Neo"
+    },
+    {
+        "question": "Qual é o nome do reino gelado em 'Frozen'?",
+        "options": ["Arendelle", "Narnia", "Westeros", "Oz"],
+        "answer": "Arendelle"
+    },
+    {
+        "question": "Qual é o nome do cientista que criou o monstro em 'Frankenstein'?",
+        "options": ["Victor Frankenstein", "Igor", "Henry Jekyll", "Van Helsing"],
+        "answer": "Victor Frankenstein"
+    },
+    {
+        "question": "Qual é o nome do gato preguiçoso que adora lasanha?",
+        "options": ["Garfield", "Tom", "Félix", "Silvestre"],
+        "answer": "Garfield"
+    },
+    {
+        "question": "Qual é o nome do herói esqueleto em 'Coco'?",
+        "options": ["Héctor", "Miguel", "Ernesto", "Dante"],
+        "answer": "Héctor"
+    },
+    {
+        "question": "Qual é o nome do vilão em 'A Pequena Sereia'?",
+        "options": ["Úrsula", "Malévola", "Cruella", "Rainha Má"],
+        "answer": "Úrsula"
+    },
+    {
+        "question": "Qual é o nome da nave espacial em 'Star Trek'?",
+        "options": ["Enterprise", "Millennium Falcon", "Serenity", "Discovery"],
+        "answer": "Enterprise"
+    }
+    
+]
