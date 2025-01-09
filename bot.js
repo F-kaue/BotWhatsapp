@@ -9,35 +9,35 @@ const groupId = '120363385272147800@g.us'; // Grupo Kaká
 // Lista de lançamentos (edite conforme necessário)
 const weeklyReleases = [
     //{group:'Mensagem teste'},
-    {group: `
-        SUPER SORTEIO
-        🥇🥈🥉: Pix de 50
-        + 15 bancas de 20,00
-        resultado 17/01
-        ——————————————
-        DEPOSITE NO MINIMO 15,00R$
-        EM QUALQUER PLATAFORMA INDICADA
-        E GANHA 1 NUMERO
-        
-        DEPOSITE 50R$ EM QUALQUER
-        PLATAFORMA INDICADA E GANHE
-        10 NÚMEROS
-        ———————————————
-        ENVIAR PRINT PARA @+558592441873 : .
-        
-        PODE DEPOSITAR NA MESMA 
-        CONTA! ✅
-        ———————————————
-        PLATAFORMAS INDICADAS
-        
-        GRUPO FP 🔥
-        https://1motelpg.com/?id=725526060&currency=BRL&type=2
-        
-        GRUPO EQP777 🏠
-        https://777-capa777.net/?id=695199135&currency=BRL&type=2
-        
-        GRUPO MANGA🥭
-        https://manga-vesak-pg.com/?id=214966595&currency=BRL&type=2`}
+    {group:`
+    SUPER SORTEIO
+    🥇🥈🥉: Pix de 50
+    + 15 bancas de 20,00
+    resultado 17/01
+    ——————————————
+    DEPOSITE NO MINIMO 15,00R$
+    EM QUALQUER PLATAFORMA INDICADA
+    E GANHA 1 NUMERO
+    
+    DEPOSITE 50R$ EM QUALQUER
+    PLATAFORMA INDICADA E GANHE
+    10 NÚMEROS
+    ———————————————
+    ENVIAR PRINT PARA @+558592441873 : .
+    
+    PODE DEPOSITAR NA MESMA 
+    CONTA! ✅
+    ———————————————
+    PLATAFORMAS INDICADAS
+    
+    GRUPO FP 🔥
+    https://1motelpg.com/?id=725526060&currency=BRL&type=2
+    
+    GRUPO EQP777 🏠
+    https://777-capa777.net/?id=695199135&currency=BRL&type=2
+    
+    GRUPO MANGA🥭
+    https://manga-vesak-pg.com/?id=214966595&currency=BRL&type=2`}
     ,//{ group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
     //{ group: 'Equipe 777', code: 'PARABÉNS777🎰✅', link: 'https://777-parabens777.cc/?id=451572321&currency=BRL&type=2' },
     //{ group: 'Grupo MK', code: '2025MK🎰✅', link: 'https://2025-mk.com/?id=103304974&currency=BRL&type=2' },
@@ -176,15 +176,6 @@ try {
         const text = message.message.conversation || message.message.extendedTextMessage?.text || '';
         console.log(`Mensagem de ${message.pushName || sender.split('@')[0]}: ${text}`);
         const messageType = Object.keys(message.message)[0];
-        
-        // Determina o tipo de atividade no ranking
-        if (messageType === 'conversation') {
-            updateActivityData(sender, 'message');
-        } else if (messageType === 'audioMessage') {
-            updateActivityData(sender, 'audio');
-        } else if (messageType === 'imageMessage') {
-            updateActivityData(sender, 'photo');
-        }
 
         if (text.startsWith('/')) {
             const command = text.split(' ')[0];
@@ -207,9 +198,14 @@ try {
                     await handleLuckCommand(sock, sender, message.pushName || sender.split('@')[0]);
                     break;
                 case '/tag':
-                    if (message.message.extendedTextMessage?.contextInfo?.quotedMessage) {
+                    if (
+                        message.message.extendedTextMessage && 
+                        message.message.extendedTextMessage.contextInfo &&
+                        message.message.extendedTextMessage.contextInfo.quotedMessage
+                    ) {
                         const quotedMessage = message.message.extendedTextMessage.contextInfo.quotedMessage.conversation || '';
-                        await handleTagCommand(sock, sender, quotedMessage, sender);
+                        const groupId = message.key.remoteJid; // Obtém o ID do grupo
+                        await handleTagCommand(sock, sender, quotedMessage, groupId);
                     } else {
                         await sock.sendMessage(sender, { text: 'Por favor, responda a uma mensagem ao usar o comando /tag.' });
                     }
@@ -256,9 +252,6 @@ try {
                     break;
                 case '/quiz':
                     await handleQuizCommand(sock, sender);
-                    break;
-                case '/ranking':
-                    await handleRankingCommand(sock, sender);
                     break;
                 
                     
@@ -405,7 +398,7 @@ const handleTagCommand = async (sock, sender, quotedMessage, groupId) => {
         const mentions = groupMetadata.participants.map(p => p.id); // Lista de IDs dos membros do grupo
 
         // Reenvia a mensagem respondida mencionando todos os membros
-        await sock.sendMessage(sender, { 
+        await sock.sendMessage(groupId, { 
             text: quotedMessage, 
             mentions 
         });
@@ -567,7 +560,7 @@ B) ${question.options[1]}
 C) ${question.options[2]}
 D) ${question.options[3]}
 
-Responda enviando o número correspondente (exemplo: 1).
+Responda enviando a alternativa correspondente.
 A resposta correta será revelada em 30 segundos!
 `;
 
@@ -579,136 +572,6 @@ A resposta correta será revelada em 30 segundos!
         await sock.sendMessage(sender, { text: answerMessage });
     }, 30000); // 30 segundos
 };
-
-
-//Função Ranking
-
-const updateActivityData = (sender, type) => {
-    try {
-        const data = loadActivityData(); // Carrega os dados do arquivo
-        if (!data[sender]) {
-            data[sender] = { messages: 0, audios: 0, photos: 0 };
-        }
-
-        // Incrementa o tipo de atividade
-        if (type === 'message') {
-            data[sender].messages++;
-        } else if (type === 'audio') {
-            data[sender].audios++;
-        } else if (type === 'photo') {
-            data[sender].photos++;
-        }
-
-        saveActivityData(data); // Salva os dados atualizados no arquivo
-    } catch (error) {
-        console.error('Erro ao atualizar o ranking:', error);
-    }
-};
-
-const path = require('path');
-
-// Caminho do arquivo JSON para armazenar os dados
-const RANKING_FILE = path.join(__dirname, 'ranking.json');
-
-// Carregar os dados do arquivo JSON
-const loadActivityData = () => {
-    try {
-        if (fs.existsSync(RANKING_FILE)) {
-            const data = fs.readFileSync(RANKING_FILE, 'utf-8');
-            return JSON.parse(data);
-        }
-    } catch (error) {
-        console.error('Erro ao carregar o ranking:', error);
-    }
-    return {};
-};
-
-// Salvar os dados no arquivo JSON
-const saveActivityData = () => {
-    try {
-        fs.writeFileSync(RANKING_FILE, JSON.stringify(activityTracker, null, 2));
-    } catch (error) {
-        console.error('Erro ao salvar o ranking:', error);
-    }
-};
-
-// Inicializar o rastreador de atividades a partir do arquivo JSON
-const activityTracker = loadActivityData();
-
-// Função para registrar atividades
-const trackActivity = (sender, type) => {
-    if (!activityTracker[sender]) {
-        activityTracker[sender] = {
-            messages: 0,
-            audios: 0,
-            photos: 0,
-        };
-    }
-
-    activityTracker[sender][type]++;
-};
-
-// Função para gerar o ranking
-const generateRanking = () => {
-    const ranking = [];
-
-    for (const [key, value] of Object.entries(activityTracker)) {
-        const total = value.messages + value.audios + value.photos;
-        ranking.push({
-            user: key,
-            messages: value.messages,
-            audios: value.audios,
-            photos: value.photos,
-            total,
-        });
-    }
-
-    ranking.sort((a, b) => b.total - a.total); // Ordena por total de atividades
-
-    return ranking.slice(0, 5); // Retorna os top 5
-};
-
-// Função para responder ao comando /ranking
-const handleRankingCommand = async (sock, groupId) => {
-    try {
-        // Carrega os dados de atividade
-        const data = loadActivityData();
-
-        // Gera o ranking
-        const ranking = Object.entries(data)
-            .map(([user, activity]) => ({
-                user, // ID do usuário
-                messages: activity.messages || 0,
-                audios: activity.audios || 0,
-                photos: activity.photos || 0,
-                total: (activity.messages || 0) + (activity.audios || 0) + (activity.photos || 0),
-            }))
-            .sort((a, b) => b.total - a.total); // Ordena pelo total de atividades
-
-        // Verifica se há dados suficientes
-        if (ranking.length === 0) {
-            await sock.sendMessage(groupId, { text: 'Ainda não há dados suficientes para o ranking!' });
-            return;
-        }
-
-        // Constrói a mensagem do ranking
-        let message = '*🏆 Ranking dos Mais Ativos 🏆*\n\n';
-        ranking.forEach((user, index) => {
-            message += `${index + 1}. @${user.user.split('@')[0]}:\n`;
-            message += `   📩 Mensagens: ${user.messages}\n`;
-            message += `   🎤 Áudios: ${user.audios}\n`;
-            message += `   📷 Fotos: ${user.photos}\n`;
-            message += `   🔢 Total: ${user.total}\n\n`;
-        });
-
-        // Envia o ranking com menções
-        await sock.sendMessage(groupId, { text: message, mentions: ranking.map(user => user.user) });
-    } catch (error) {
-        console.error('Erro ao processar o ranking:', error);
-        await sock.sendMessage(groupId, { text: 'Erro ao obter o ranking. Tente novamente mais tarde.' });
-    }
-};
-
 
 // Função para enviar a lista de comandos disponíveis
 const sendHelpMessage = async (sock, sender) => {
@@ -722,7 +585,7 @@ const sendHelpMessage = async (sock, sender) => {
 /tag - Marcar a mensagem e enviar para todos.
 /forca - Iniciar brincadeira da forca.
 /quiz - Iniciar um quiz.
-/ranking - Ver os rank dos participantes mais ativos no grupo
+
 
 ⚠️ *Regras do Grupo* ⚠️
 - Envio de links por membros não-administradores resulta em expulsão automática do grupo.
