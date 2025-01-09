@@ -33,9 +33,6 @@ const weeklyReleases = [
     GRUPO FP 🔥
     https://1motelpg.com/?id=725526060&currency=BRL&type=2
     
-    GRUPO EQP777 🏠
-    https://777-capa777.net/?id=695199135&currency=BRL&type=2
-    
     GRUPO MANGA🥭
     https://manga-vesak-pg.com/?id=214966595&currency=BRL&type=2`}
     ,//{ group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
