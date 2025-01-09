@@ -109,29 +109,6 @@ const connectToWhatsApp = async () => {
                 }
             }
         }
-        for (const msg of messages) {
-            const sender = msg.key.remoteJid;
-    
-            // Ignorar mensagens do bot
-            if (msg.key.fromMe) continue;
-    
-            // Rastrear mensagens
-            if (msg.message?.conversation) {
-                trackActivity(sender, 'messages');
-            }
-    
-            // Rastrear áudios
-            if (msg.message?.audioMessage) {
-                trackActivity(sender, 'audios');
-            }
-    
-            // Rastrear fotos
-            if (msg.message?.imageMessage) {
-                trackActivity(sender, 'photos');
-            }
-        }
-    
-    
     });
     
 try {
