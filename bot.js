@@ -3,7 +3,7 @@ const { default: makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion,
 const qrcode = require('qrcode-terminal');
 
 // Configurações gerais
-const groupId = '120363385272147800@g.us'; // Grupo Kaká
+const groupId = '120363369329720966@g.us'; // Grupo Kaká
 //const groupId = '120363389372931037@g.us'; //Grupo Teste
 
 // Lista de lançamentos (edite conforme necessário)
@@ -34,7 +34,10 @@ GRUPO CLUBE777 🔥
 https://fkf777.win/?id=865890538&currency=BRL&type=2
 
 GRUPO EQP777🥭
-https://baixo777.co/?id=528607224&currency=BRL&type=2`}
+https://baixo777.co/?id=528607224&currency=BRL&type=2
+
+GRUPO MANGA 🥭 
+https://manga-verao-pg.com/?id=656608494&currency=BRL&type=2`}
     ,//{ group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
     //{ group: 'Equipe 777', code: 'PARABÉNS777🎰✅', link: 'https://777-parabens777.cc/?id=451572321&currency=BRL&type=2' },
     //{ group: 'Grupo MK', code: '2025MK🎰✅', link: 'https://2025-mk.com/?id=103304974&currency=BRL&type=2' },
