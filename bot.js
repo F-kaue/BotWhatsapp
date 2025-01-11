@@ -10,31 +10,31 @@ const groupId = '120363385272147800@g.us'; // Grupo Kaká
 const weeklyReleases = [
     //{group:'Mensagem teste'},
     {group:`
-    SUPER SORTEIO
-    🥇🥈🥉: Pix de 50
-    + 15 bancas de 20,00
-    resultado 17/01
-    ——————————————
-    DEPOSITE NO MINIMO 15,00R$
-    EM QUALQUER PLATAFORMA INDICADA
-    E GANHA 1 NUMERO
-    
-    DEPOSITE 50R$ EM QUALQUER
-    PLATAFORMA INDICADA E GANHE
-    10 NÚMEROS
-    ———————————————
-    ENVIAR PRINT PARA @+558592441873 : .
-    
-    PODE DEPOSITAR NA MESMA 
-    CONTA! ✅
-    ———————————————
-    PLATAFORMAS INDICADAS
-    
-    GRUPO FP 🔥
-    https://1motelpg.com/?id=725526060&currency=BRL&type=2
-    
-    GRUPO MANGA🥭
-    https://manga-vesak-pg.com/?id=214966595&currency=BRL&type=2`}
+SUPER SORTEIO
+🥇🥈🥉: Pix de 50
++ 15 bancas de 20,00
+resultado 17/01
+——————————————
+DEPOSITE NO MINIMO 15,00R$
+EM QUALQUER PLATAFORMA INDICADA
+E GANHA 1 NUMERO
+
+DEPOSITE 50R$ EM QUALQUER
+PLATAFORMA INDICADA E GANHE
+10 NÚMEROS
+———————————————
+ENVIAR PRINT PARA @+558592441873 : .
+
+PODE DEPOSITAR NA MESMA 
+CONTA! ✅
+———————————————
+PLATAFORMAS INDICADAS
+
+GRUPO CLUBE777 🔥
+https://fkf777.win/?id=865890538&currency=BRL&type=2
+
+GRUPO EQP777🥭
+https://baixo777.co/?id=528607224&currency=BRL&type=2`}
     ,//{ group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
     //{ group: 'Equipe 777', code: 'PARABÉNS777🎰✅', link: 'https://777-parabens777.cc/?id=451572321&currency=BRL&type=2' },
     //{ group: 'Grupo MK', code: '2025MK🎰✅', link: 'https://2025-mk.com/?id=103304974&currency=BRL&type=2' },
@@ -177,7 +177,7 @@ try {
                         message.message.extendedTextMessage.contextInfo &&
                         message.message.extendedTextMessage.contextInfo.quotedMessage
                     ) {
-                        const quotedMessage = message.message.extendedTextMessage.contextInfo.quotedMessage.conversation || '';
+                        const quotedMessage = message.message.extendedTextMessage.contextInfo.quotedMessage;
                         const groupId = message.key.remoteJid; // Obtém o ID do grupo
                         await handleTagCommand(sock, sender, quotedMessage, groupId);
                     } else {
@@ -371,12 +371,45 @@ const handleTagCommand = async (sock, sender, quotedMessage, groupId) => {
         const groupMetadata = await sock.groupMetadata(groupId);
         const mentions = groupMetadata.participants.map(p => p.id); // Lista de IDs dos membros do grupo
 
-        // Reenvia a mensagem respondida mencionando todos os membros
-        await sock.sendMessage(groupId, { 
-            text: quotedMessage, 
-            mentions 
-        });
+        // Identifica o tipo de mensagem citada e reenvia com as menções
+        let messageContent = {};
+        if (quotedMessage.conversation) {
+            // Mensagem de texto
+            messageContent = { text: quotedMessage.conversation, mentions };
+        } else if (quotedMessage.imageMessage) {
+            // Mensagem com imagem
+            const caption = quotedMessage.imageMessage.caption || ''; // Obtém a legenda, se houver
+            const imageBuffer = await sock.downloadMediaMessage(quotedMessage.imageMessage); // Faz download da mídia
+            messageContent = { 
+                image: imageBuffer, 
+                caption, 
+                mentions 
+            };
+        } else if (quotedMessage.videoMessage) {
+            // Mensagem com vídeo
+            const caption = quotedMessage.videoMessage.caption || ''; // Obtém a legenda, se houver
+            const videoBuffer = await sock.downloadMediaMessage(quotedMessage.videoMessage); // Faz download da mídia
+            messageContent = { 
+                video: videoBuffer, 
+                caption, 
+                mentions 
+            };
+        } else if (quotedMessage.audioMessage) {
+            // Mensagem com áudio
+            const audioBuffer = await sock.downloadMediaMessage(quotedMessage.audioMessage); // Faz download da mídia
+            messageContent = { 
+                audio: audioBuffer, 
+                mimetype: quotedMessage.audioMessage.mimetype, 
+                ptt: true // Define como mensagem de áudio PTT (push-to-talk)
+            };
+        } else {
+            // Outros tipos de mensagens não suportados
+            await sock.sendMessage(sender, { text: 'Este tipo de mensagem ainda não é suportado pelo comando /tag.' });
+            return;
+        }
 
+        // Reenvia a mensagem no grupo com as menções
+        await sock.sendMessage(groupId, messageContent);
         console.log(`[BOT] Mensagem respondida e todos os membros mencionados no grupo ${groupId}`);
     } catch (error) {
         console.error('Erro ao processar o comando /tag:', error);
