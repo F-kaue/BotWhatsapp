@@ -30,14 +30,25 @@ CONTA! ✅
 ———————————————
 PLATAFORMAS INDICADAS
 
-GRUPO CLUBE777 🔥
-https://fkf777.win/?id=865890538&currency=BRL&type=2
-
-GRUPO EQP777🥭
+GRUPO EQP777 🎻
 https://baixo777.co/?id=528607224&currency=BRL&type=2
 
 GRUPO MANGA 🥭 
-https://manga-verao-pg.com/?id=656608494&currency=BRL&type=2`}
+https://manga-verao-pg.com/?id=656608494&currency=BRL&type=2
+
+PLATAFORMA DA FESTA DE LANÇAMENTO 🌊🐚🐙
+
+https://am-rio.com/?id=304526092&currency=BRL&type=2
+
+ao depositar 35 R$ voce ganha 
+QUINZE NUMEROS
+para o sorteio!!!
+
+depositou 10,00 2 numeros
+depositou 20,00 5 numeros
+deposito 35,00 15 numeros
+
+print envia para @+558592441873`}
     ,//{ group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
     //{ group: 'Equipe 777', code: 'PARABÉNS777🎰✅', link: 'https://777-parabens777.cc/?id=451572321&currency=BRL&type=2' },
     //{ group: 'Grupo MK', code: '2025MK🎰✅', link: 'https://2025-mk.com/?id=103304974&currency=BRL&type=2' },
