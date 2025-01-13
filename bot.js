@@ -28,13 +28,6 @@ ENVIAR PRINT PARA @+558592441873 : .
 PODE DEPOSITAR NA MESMA 
 CONTA! ✅
 ———————————————
-PLATAFORMAS INDICADAS
-
-GRUPO EQP777 🎻
-https://baixo777.co/?id=528607224&currency=BRL&type=2
-
-GRUPO MANGA 🥭 
-https://manga-verao-pg.com/?id=656608494&currency=BRL&type=2
 
 PLATAFORMA DA FESTA DE LANÇAMENTO 🌊🐚🐙
 
