@@ -15,11 +15,11 @@ SUPER SORTEIO
 + 15 bancas de 20,00
 resultado 17/01
 ——————————————
-DEPOSITE NO MINIMO 15,00R$
+DEPOSITE NO MINIMO 10,00R$
 EM QUALQUER PLATAFORMA INDICADA
 E GANHA 1 NUMERO
 
-DEPOSITE 50R$ EM QUALQUER
+DEPOSITE 30R$ EM QUALQUER
 PLATAFORMA INDICADA E GANHE
 10 NÚMEROS
 ———————————————
@@ -29,19 +29,19 @@ PODE DEPOSITAR NA MESMA
 CONTA! ✅
 ———————————————
 
-PLATAFORMA DA FESTA DE LANÇAMENTO 🌊🐚🐙
+PLATAFORMAS 🌊🐚🐙
 
-https://am-rio.com/?id=304526092&currency=BRL&type=2
+Grupo FP
+https://3hippopg.com/?id=614882014&currency=BRL&type=2
 
-ao depositar 35 R$ voce ganha 
-QUINZE NUMEROS
-para o sorteio!!!
+Equipe 777
+https://tela777.me/?id=379643254&currency=BRL&type=2
 
-depositou 10,00 2 numeros
-depositou 20,00 5 numeros
-deposito 35,00 15 numeros
+CLUBE777
+https://flf777.vip/?id=658122479&currency=BRL&type=2
 
-print envia para @+558592441873`}
+
+`}
     ,//{ group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
     //{ group: 'Equipe 777', code: 'PARABÉNS777🎰✅', link: 'https://777-parabens777.cc/?id=451572321&currency=BRL&type=2' },
     //{ group: 'Grupo MK', code: '2025MK🎰✅', link: 'https://2025-mk.com/?id=103304974&currency=BRL&type=2' },
