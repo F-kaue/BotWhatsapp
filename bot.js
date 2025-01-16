@@ -35,10 +35,8 @@ Grupo FP
 https://3hippopg.com/?id=614882014&currency=BRL&type=2
 
 Equipe 777
-https://tela777.me/?id=379643254&currency=BRL&type=2
+https://www.praca777.win/?id=872194851&currency=BRL&type=2
 
-CLUBE777
-https://flf777.vip/?id=658122479&currency=BRL&type=2
 
 
 `}
