@@ -57,9 +57,9 @@ const sendWeeklyReleases = async (sock, groupId) => {
         let message = '🌟 *SORTEIO DA SEMANA* 🌟\n\n';
         
         // Ativar quando quiser anunciar somente ao sorteio
-        // weeklyReleases.forEach((release) => {
-        //     message += `${release.group}\n`;
-        // });
+        weeklyReleases.forEach((release) => {
+            message += `${release.group}\n`;
+        });
 
         // Ativar quando quiser mandar os links
         // weeklyReleases.forEach((release) => {
@@ -74,15 +74,15 @@ const sendWeeklyReleases = async (sock, groupId) => {
 };
 
 // Agendamento para enviar a mensagem automaticamente a cada 1 minuto
-const scheduleWeeklyReleases = (sock, groupId) => {
-    console.log('[BOT] Agendando mensagens automáticas para o grupo...');
+// const scheduleWeeklyReleases = (sock, groupId) => {
+//     console.log('[BOT] Agendando mensagens automáticas para o grupo...');
 
-//Alterar o tempo de envio da mensagem ativar/desativar mensagem automatica
-    schedule.scheduleJob('*/30 * * * *', () => {
-        console.log('[BOT] Enviando mensagens automáticas...');
-        sendWeeklyReleases(sock, groupId);
-    });
-};
+// //Alterar o tempo de envio da mensagem ativar/desativar mensagem automatica
+//     schedule.scheduleJob('*/30 * * * *', () => {
+//         console.log('[BOT] Enviando mensagens automáticas...');
+//         sendWeeklyReleases(sock, groupId);
+//     });
+// };
 
 // Função principal para conectar ao WhatsApp
 const connectToWhatsApp = async () => {
