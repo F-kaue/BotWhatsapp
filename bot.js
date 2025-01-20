@@ -57,9 +57,9 @@ const sendWeeklyReleases = async (sock, groupId) => {
         let message = '🌟 *SORTEIO DA SEMANA* 🌟\n\n';
         
         // Ativar quando quiser anunciar somente ao sorteio
-        weeklyReleases.forEach((release) => {
-            message += `${release.group}\n`;
-        });
+        // weeklyReleases.forEach((release) => {
+        //     message += `${release.group}\n`;
+        // });
 
         // Ativar quando quiser mandar os links
         // weeklyReleases.forEach((release) => {
