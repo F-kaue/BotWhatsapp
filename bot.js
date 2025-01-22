@@ -10,35 +10,41 @@ const groupId = '120363369329720966@g.us'; // Grupo Kaká
 const weeklyReleases = [
     //{group:'Mensagem teste'},
     {group:`
-SUPER SORTEIO
-🥇🥈🥉: Pix de 50
-+ 15 bancas de 20,00
-resultado 17/01
-——————————————
-DEPOSITE NO MINIMO 10,00R$
-EM QUALQUER PLATAFORMA INDICADA
-E GANHA 1 NUMERO
+SUPER SORTEIO 💖
 
-DEPOSITE 30R$ EM QUALQUER
-PLATAFORMA INDICADA E GANHE
-10 NÚMEROS
+3 pix de 50
++ 10 bancas de 20💖
+
+🚨🚨🚨REGRAS🚨🚨🚨
+
+contas pelo meu link somente
+
+pode depositar na mesma conta
+
+enviar print de cada deposito para @⁨adm kaká⁩
 ———————————————
-ENVIAR PRINT PARA @+558592441873 : .
+DEPOSITE 10 E LEVE UM NUMERO
 
-PODE DEPOSITAR NA MESMA 
-CONTA! ✅
+DEPOSITE 30 E LEVE 10 NUMEROS!
 ———————————————
+OBS: DEPOSITOU 30 NA MK, LEVA 15 NUMEROS
 
-PLATAFORMAS 🌊🐚🐙
+🚨🚨🚨🚨🚨🚨🚨🚨🚨
+LINKS VALIDOS PARA O SORTEIO
+🚨🚨🚨🚨🚨🚨🚨🚨🚨
 
-Grupo FP
-https://3hippopg.com/?id=614882014&currency=BRL&type=2
-
-Equipe 777
-https://www.praca777.win/?id=872194851&currency=BRL&type=2
-
+GRUPO EQP777
+https://www.gata777.net/?id=585717420&currency=BRL&type=2
 
 
+GRUPO VOY
+https://www.voy-dronespg.com/?id=549305392&currency=BRL&type=2
+
+GRUPO MK
+https://mkbrl.com.br/?id=213746892&currency=BRL&type=2
+
+
+RESULTADO DIA 23 ÀS 13:00
 `}
     ,//{ group: 'Grupo FP', code: 'GEMASPG🎰✅', link: 'https://gemaspg.com/?id=938963826&currency=BRL&type=2' },
     //{ group: 'Equipe 777', code: 'PARABÉNS777🎰✅', link: 'https://777-parabens777.cc/?id=451572321&currency=BRL&type=2' },
@@ -78,10 +84,10 @@ const scheduleWeeklyReleases = (sock, groupId) => {
     console.log('[BOT] Agendando mensagens automáticas para o grupo...');
 
 //Alterar o tempo de envio da mensagem ativar/desativar mensagem automatica
-    // schedule.scheduleJob('*/30 * * * *', () => {
-    //     console.log('[BOT] Enviando mensagens automáticas...');
-    //     sendWeeklyReleases(sock, groupId);
-    // });
+    schedule.scheduleJob('*/30 * * * *', () => {
+        console.log('[BOT] Enviando mensagens automáticas...');
+        sendWeeklyReleases(sock, groupId);
+    });
 };
 
 // Função principal para conectar ao WhatsApp
